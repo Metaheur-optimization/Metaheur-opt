@@ -1,6 +1,8 @@
 function  [Z]=fitness(x)
 xn=x;
 
+% gfhfghf
+
 
 
 % 55
