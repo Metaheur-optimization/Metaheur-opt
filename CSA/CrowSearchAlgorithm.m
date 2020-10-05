@@ -22,7 +22,11 @@ format long; close all; clear all; clc
 tic;
 Global=zeros(30,5000);
 
-% test Change 
+% test Change
+index=1;
+index1=2;
+
+
 
 for run=1:30
 pd=10; % Problem dimension (number of decision variables)
@@ -69,8 +73,45 @@ for t=1:tmax
     best_=min(fit_mem);
     disp([ 'run =   ' num2str(run)     '  iter =   '  num2str(t)   ' BEST = '  num2str(best_)])
 end
+
+
+%%   +++++++++ Plot x-Values and y-Values
+h1 = figure(index);
+set(h1, 'Visible', 'on');
+plot(xn,'go','MarkerSize',10)
+
+xlabel('Number of Iteration')
+ylabel('xn')
+
+h2 = figure(index1);
+set(h2, 'Visible', 'on');
+
+plot(fit_mem,'r*','MarkerSize',10)
+xlabel('Number of Iteration')
+ylabel('Y(Objective Function Value)')
+ hhh(run,1)=min(fit_mem)
+%%
+
+
+
 ngbest=find(fit_mem== min(fit_mem));
 g_best=mem(ngbest(1),:); % Solutin of the problem
 Global(run,:)=ffit;
+
+index=index+1;
+index1=index1+1;
+
 end
+
+%%   ========= Plot best solutions ================
+run1=1:30;
+plot(run1,hhh(:,1),'bo','MarkerSize',12,'markerfacecolor','r')
+
+xlabel('Number of Iteration')
+ylabel('Solution')
+
+
+
+
+
 toc
