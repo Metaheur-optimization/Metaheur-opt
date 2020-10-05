@@ -28,7 +28,7 @@ index1=2;
 
 
 
-for run=1:10  %30
+for run=1:30
 pd=10; % Problem dimension (number of decision variables)
 N=20; % Flock (population) size
 AP=0.1; % Awareness probability
@@ -106,7 +106,7 @@ index1=index1+2;
 end
 
 %%   ========= Plot best solutions ================
-run1=1:10;
+run1=1:30;
 
 plot(run1,hhh(:,1),'bo','MarkerSize',12,'markerfacecolor','r')
 
