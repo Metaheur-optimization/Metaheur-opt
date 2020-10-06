@@ -28,7 +28,7 @@ index1=2;
 
 
 
-for run=1:30
+for run=1:5  %30
 pd=10; % Problem dimension (number of decision variables)
 N=20; % Flock (population) size
 AP=0.1; % Awareness probability
@@ -92,6 +92,9 @@ end
 
 
  hhh(run,1)=(min(ffit)*10^18);
+ [minval, minidx]=(min(ffit));
+ 
+ hhh(run,2)=minidx;
 %%
 
 
@@ -106,12 +109,21 @@ index1=index1+2;
 end
 
 %%   ========= Plot best solutions ================
-run1=1:30;
-
+run1=1:5; %  30;
+%subplot(2,1,1)
 plot(run1,hhh(:,1),'bo','MarkerSize',12,'markerfacecolor','r')
 
-xlabel('Number of Iteration')
+text(run1,hhh(:,1),num2str(hhh(:,2)))
+
+xlabel('Number of Run')
 ylabel('Solution')
+
+
+%subplot(2,1,2)
+% plot(hhh(:,2),hhh(:,1),'g*','MarkerSize',12,'markerfacecolor','r')
+% 
+% xlabel('Number of Iteration in each Run')
+% ylabel('Solution')
 
 
 
