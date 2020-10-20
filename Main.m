@@ -9,6 +9,7 @@ itermax=5000;  %Maximum number of iterations
 LB=-10; %Lower bound of variables
 UB=10;  %Upper bound of variables
 Algorithm='PSO'; % 'CSA' 'PSO' 
+% This is new test
 
 %%Parameters setting for the CSA
 AP=0.1; % Awareness probability
