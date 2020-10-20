@@ -8,7 +8,7 @@ Nrun=1; %Number of runs
 itermax=5000;  %Maximum number of iterations
 LB=-10; %Lower bound of variables
 UB=10;  %Upper bound of variables
-Algorithm='CSA';
+Algorithm='PSO'; % 'CSA' 'PSO' 
 
 %%Parameters setting for the CSA
 AP=0.1; % Awareness probability
