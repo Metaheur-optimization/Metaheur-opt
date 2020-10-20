@@ -1,6 +1,6 @@
 
 % -------------------------------------------------
-function [Global fit_mem g_best]=CrowSearchAlgorithm(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl)
+function [Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl)
 Global=zeros(Nrun,itermax);
 
 for run=1:Nrun

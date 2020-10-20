@@ -8,7 +8,7 @@ Nrun=1; %Number of runs
 itermax=5000;  %Maximum number of iterations
 LB=-10; %Lower bound of variables
 UB=10;  %Upper bound of variables
-Algorithm='PSO'; % 'CSA' 'PSO' 
+Algorithm='CSA'; % 'CSA' 'PSO' 
 % This is new test
 
 %%Parameters setting for the CSA
@@ -25,7 +25,7 @@ fl=2; % Flight length (fl)
 switch Algorithm
 %%Crow Search Algorithm
     case 'CSA'
-[Global fit_mem g_best]=CrowSearchAlgorithm(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
+[Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
 
     case 'PSO'
         [BestCost BestSolution]=PSO(Npop,Nvar,Func,Nrun,itermax,LB,UB,w,wdamp,c1,c2);
