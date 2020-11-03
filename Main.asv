@@ -22,8 +22,6 @@ fl=2; % Flight length (fl)
  c2=2;           % Global Learning Coefficient
  
  
- Legend2=cell(1,2);
- 
  for Func=1:13
      
 %switch Algorithm
@@ -40,30 +38,16 @@ fl=2; % Flight length (fl)
 BestSolutions=Global;
 P=plt(Nrun,Func,itermax,Algorithm,BestSolutions);
 
-
-    Legend2{1}=(['Function No :',num2str(Func)]);
-    Legend2{2}=(['Algorithm Type :',Algorithm]);
-      
-    legend(['Function No :',num2str(Func),' ; ','Algorithm Type :',Algorithm]);
-    
-     %legend(Legend2);
-
-
     %case 'PSO'
-    
-    elseif Algorithm==2;
-         Algorithm='PSO';
-         
         [BestCost BestSolution]=PSO(Npop,Nvar,Func,Nrun,itermax,LB,UB,w,wdamp,c1,c2);
       
+        elseif Algorithm=='PSO';
         
-        
-           
      hold on   
-BestSolutions=BestCost;
+BestSolutions=BestSolution;
 P=plt(Nrun,Func,itermax,Algorithm,BestSolutions);
         
-  %legend(['Function No :',num2str(Func),' ; ','Algorithm Type :',Algorithm]);      
+        
 %end
 
         end
@@ -72,10 +56,7 @@ P=plt(Nrun,Func,itermax,Algorithm,BestSolutions);
         
     end
 
-  
- 
-    
-    
  end
-kads=1; 
+ 
+ kads=1;
  
