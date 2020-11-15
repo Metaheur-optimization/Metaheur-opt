@@ -3,9 +3,9 @@ format long; close all; clear all; clc
 %%Common parameters setting
 Npop=20;  %Population size
 Nvar=2;  %Number of decision variables
-Func=2;  %Number of fitness function according to fitness file
+Func=10;  %Number of fitness function according to fitness file
 Nrun=1; %Number of runs
-itermax=5000;  %Maximum number of iterations
+itermax=100;  %Maximum number of iterations
 LB=-10; %Lower bound of variables
 UB=10;  %Upper bound of variables
 Algorithm='PSO'; % 'CSA' 'PSO' 
@@ -21,6 +21,32 @@ fl=2; % Flight length (fl)
  c1=2;           % Personahl Learning Coefficient
  c2=2;           % Global Learning Coefficient
  
+ 
+ Legend2=cell(1,2);
+ 
+% [Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
+
+
+%% ************** New Algorithm ****************** 
+ [BestDV BestFittVal OptiVal]=NAI(Npop,Nvar,Func,Nrun,itermax);
+
+ minmm1=min(BestFittVal)
+ ind=
+ xy=
+ % compare with other
+ 
+ [Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
+
+ minmm=min(Global)
+ 
+ plot(BestFittVal,'g*')
+ hold on
+ plot(Global,'bd')
+ 
+ 
+ 
+ 
+%% 
  
  for Func=1:13
      
@@ -38,16 +64,30 @@ fl=2; % Flight length (fl)
 BestSolutions=Global;
 P=plt(Nrun,Func,itermax,Algorithm,BestSolutions);
 
+
+    Legend2{1}=(['Function No :',num2str(Func)]);
+    Legend2{2}=(['Algorithm Type :',Algorithm]);
+      
+    legend(['Function No :',num2str(Func),' ; ','Algorithm Type :',Algorithm]);
+    
+     %legend(Legend2);
+
+
     %case 'PSO'
+    
+    elseif Algorithm==2;
+         Algorithm='PSO';
+         
         [BestCost BestSolution]=PSO(Npop,Nvar,Func,Nrun,itermax,LB,UB,w,wdamp,c1,c2);
       
-        elseif Algorithm=='PSO';
         
+        
+           
      hold on   
-BestSolutions=BestSolution;
+BestSolutions=BestCost;
 P=plt(Nrun,Func,itermax,Algorithm,BestSolutions);
         
-        
+  %legend(['Function No :',num2str(Func),' ; ','Algorithm Type :',Algorithm]);      
 %end
 
         end
@@ -56,7 +96,17 @@ P=plt(Nrun,Func,itermax,Algorithm,BestSolutions);
         
     end
 
+  
+ 
+    
+    
  end
  
- kads=1;
+ 
+ 
+ 
+ 
+ 
+ 
+kads=1; 
  

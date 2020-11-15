@@ -3,9 +3,9 @@ format long; close all; clear all; clc
 %%Common parameters setting
 Npop=20;  %Population size
 Nvar=2;  %Number of decision variables
-Func=2;  %Number of fitness function according to fitness file
+Func=10;  %Number of fitness function according to fitness file
 Nrun=1; %Number of runs
-itermax=5000;  %Maximum number of iterations
+itermax=100;  %Maximum number of iterations
 LB=-10; %Lower bound of variables
 UB=10;  %Upper bound of variables
 Algorithm='PSO'; % 'CSA' 'PSO' 
@@ -23,6 +23,31 @@ fl=2; % Flight length (fl)
  
  
  Legend2=cell(1,2);
+ 
+% [Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
+
+
+%% ************** New Algorithm ****************** 
+ [BestDVs BestFittVal OptiVals BestSol BestDV]=NAI(Npop,Nvar,Func,Nrun,itermax);
+
+ 
+ 
+ 
+ % compare with other (e.g. CSA)
+ [Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
+
+ BestSolutionFound=min(Global)
+ 
+ plot(BestFittVal,'g*')
+ hold on
+ plot(BestSol,'ro','MarkerSize',10)
+ hold on
+ plot(Global,'bd')
+ 
+ plot(minmm,'yo','MarkerSize',10)
+ 
+ 
+%% 
  
  for Func=1:13
      
@@ -77,5 +102,12 @@ P=plt(Nrun,Func,itermax,Algorithm,BestSolutions);
     
     
  end
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 kads=1; 
  
