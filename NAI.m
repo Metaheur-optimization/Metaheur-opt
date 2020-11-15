@@ -1,5 +1,5 @@
 %% ************ Developing New Algorithm *********
-function [BestDVs BestFittVals OptiVals BestSol BestDV]=NAI(Npop,Nvar,Func,Nrun,itermax)
+function [BestDVs BestFittVals OptiVals BestSol BestDV Pareto]=NAI(Npop,Nvar,Func,Nrun,itermax)
 
 %% General parameter definition
 pd=Nvar; % Problem dimension (number of decision variables)
@@ -11,6 +11,7 @@ X = -10:0.001:10;
 x = (randi([-10,10],N,2)/100);
 
 BestDVs=[];
+PartoIndex=1;
 
 for run=1:Nrun
 
@@ -19,7 +20,7 @@ for Iter=1:itermax
 xn=x;
 ft=fitness(xn,N,pd,FuncNum);
 
-
+rng('shuffle');
 
 % %%%%%%%%%%%%%% New Operators %%%%%%%%%%%%%%%%%%%
 
@@ -43,11 +44,41 @@ Iter
 
 BestFittVals(Iter,1)=min(ft(1,:));
 
+
+    
 OptiVals=(BestFittVals(end,1));
 
-BestIndex=find(ft==OptiVals)
+BestIndex=find(ft==OptiVals);
 
-BestDVs(Iter,:)=x(BestIndex(1),:)
+BestDVs(Iter,:)=x(BestIndex(1),:);
+
+
+
+
+
+% if less than the bervious one
+
+if Iter>1
+    
+if BestFittVals(end,1)< (min(BestFittVals))
+   
+    PartoIndex=PartoIndex+1; 
+    
+Pareto(PartoIndex,1)=BestFittVals(end,1);
+
+end
+
+else
+    
+ Pareto(PartoIndex,1)=BestFittVals(1,1);   
+
+end
+
+
+
+
+
+
 
 end
 

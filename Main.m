@@ -3,7 +3,7 @@ format long; close all; clear all; clc
 %%Common parameters setting
 Npop=20;  %Population size
 Nvar=2;  %Number of decision variables
-Func=10;  %Number of fitness function according to fitness file
+Func=13;  %Number of fitness function according to fitness file
 Nrun=1; %Number of runs
 itermax=100;  %Maximum number of iterations
 LB=-10; %Lower bound of variables
@@ -25,28 +25,29 @@ fl=2; % Flight length (fl)
  Legend2=cell(1,2);
  
 % [Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
-
+for Func=5:13
 
 %% ************** New Algorithm ****************** 
- [BestDVs BestFittVal OptiVals BestSol BestDV]=NAI(Npop,Nvar,Func,Nrun,itermax);
-
- 
- 
+ [BestDVs BestFittVal OptiVals BestSol BestDV Pareto]=NAI(Npop,Nvar,Func,Nrun,itermax);
  
  % compare with other (e.g. CSA)
  [Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
 
  BestSolutionFound=min(Global)
  
- plot(BestFittVal,'g*')
+ figure(Func)
+ plot(BestFittVal,'g*','MarkerSize',5)
+ 
+ %hold on
+ %plot(BestSol,'ro','MarkerSize',10)
  hold on
- plot(BestSol,'ro','MarkerSize',10)
- hold on
- plot(Global,'bd')
- 
- plot(minmm,'yo','MarkerSize',10)
+ plot(Global,'b.','MarkerSize',15)
  
  
+ legend ('New Algorithm','CSA')
+ %plot(BestSolutionFound,'yo','MarkerSize',10)
+ 
+end
 %% 
  
  for Func=1:13
