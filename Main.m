@@ -25,7 +25,7 @@ fl=2; % Flight length (fl)
  Legend2=cell(1,2);
  
 % [Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
-for Func=5:13
+for Func=1:13
 
 %% ************** New Algorithm ****************** 
  [BestDVs BestFittVal OptiVals BestSol BestDV Pareto]=NAI(Npop,Nvar,Func,Nrun,itermax);
