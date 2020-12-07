@@ -28,24 +28,33 @@ fl=2; % Flight length (fl)
 for Func=1:13
 
 %% ************** New Algorithm ****************** 
- [BestDVs BestFittVal OptiVals BestSol BestDV]=NAI(Npop,Nvar,Func,Nrun,itermax);
+ [BestDVs BestFittVal OptiVals BestSol BestDV Pareto]=NAI(Npop,Nvar,Func,Nrun,itermax);
  
  % compare with other (e.g. CSA)
  [Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
 
- BestSolutionFound=min(Global)
+ % compare with other (e.g. PSO)
+  [BestCost BestSolution]=PSO(Npop,Nvar,Func,Nrun,itermax,LB,UB,w,wdamp,c1,c2);
+      
  
- figure(Func)
- plot(BestFittVal,'g*','MarkerSize',10)
+ BestSolutionFound=min(Global);
+ 
+ figure(Func);
+ plot(BestFittVal,'g*','MarkerSize',5);
  
  %hold on
  %plot(BestSol,'ro','MarkerSize',10)
  hold on
- plot(Global,'b.','MarkerSize',15)
+ plot(Global,'b.','MarkerSize',15);
  
- 
- legend ('CSA','New Al
+%  legend ('New Algorithm','CSA');
  %plot(BestSolutionFound,'yo','MarkerSize',10)
+ 
+ hold on
+ plot(BestCost,'rd','MarkerSize',15);
+ 
+ legend ('New Algorithm','CSA', 'PSO');
+ 
  
 end
 %% 

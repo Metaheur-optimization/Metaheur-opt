@@ -90,7 +90,7 @@ end
 
 end
 
- BestSol=min(BestFittVals)
+ BestSol=min(BestFittVals);
  ind=find(BestFittVals==BestSol);
  BestDV=BestDVs(ind,:);
 

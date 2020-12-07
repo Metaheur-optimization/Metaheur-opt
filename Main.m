@@ -33,82 +33,91 @@ for Func=1:13
  % compare with other (e.g. CSA)
  [Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
 
- BestSolutionFound=min(Global)
+ % compare with other (e.g. PSO)
+  [BestCost BestSolution]=PSO(Npop,Nvar,Func,Nrun,itermax,LB,UB,w,wdamp,c1,c2);
+      
  
- figure(Func)
- plot(BestFittVal,'g*','MarkerSize',5)
+ BestSolutionFound=min(Global);
+ 
+ figure(Func);
+ plot(BestFittVal,'g*','MarkerSize',5);
  
  %hold on
  %plot(BestSol,'ro','MarkerSize',10)
  hold on
- plot(Global,'b.','MarkerSize',15)
+ plot(Global,'b.','MarkerSize',15);
  
- 
- legend ('New Algorithm','CSA')
+%  legend ('New Algorithm','CSA');
  %plot(BestSolutionFound,'yo','MarkerSize',10)
+ 
+ hold on
+ plot(BestCost,'rd','MarkerSize',8);
+ 
+ legend ('New Algorithm','CSA', 'PSO');
+ 
  
 end
 %% 
  
- for Func=1:13
-     
-%switch Algorithm
-%%Crow Search Algorithm
-    %case 'CSA'
-    
-    for Algorithm=1:2
-    
-        if Algorithm==1
-            Algorithm='CSA'
-        
-[Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
-
-BestSolutions=Global;
-P=plt(Nrun,Func,itermax,Algorithm,BestSolutions);
-
-
-    Legend2{1}=(['Function No :',num2str(Func)]);
-    Legend2{2}=(['Algorithm Type :',Algorithm]);
-      
-    legend(['Function No :',num2str(Func),' ; ','Algorithm Type :',Algorithm]);
-    
-     %legend(Legend2);
-
-
-    %case 'PSO'
-    
-    elseif Algorithm==2;
-         Algorithm='PSO';
-         
-        [BestCost BestSolution]=PSO(Npop,Nvar,Func,Nrun,itermax,LB,UB,w,wdamp,c1,c2);
-      
-        
-        
-           
-     hold on   
-BestSolutions=BestCost;
-P=plt(Nrun,Func,itermax,Algorithm,BestSolutions);
-        
-  %legend(['Function No :',num2str(Func),' ; ','Algorithm Type :',Algorithm]);      
-%end
-
-        end
-        
-        
-        
-    end
-
-  
- 
-    
-    
- end
- 
- 
+%  for Func=1:13
+%      
+% %switch Algorithm
+% %%Crow Search Algorithm
+%     %case 'CSA'
+%     
+%     for Algorithm=1:2
+%     
+%         if Algorithm==1
+%             Algorithm='CSA'
+%         
+% [Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
+% 
+% BestSolutions=Global;
+% P=plt(Nrun,Func,itermax,Algorithm,BestSolutions);
+% 
+% 
+%     Legend2{1}=(['Function No :',num2str(Func)]);
+%     Legend2{2}=(['Algorithm Type :',Algorithm]);
+%       
+%     legend(['Function No :',num2str(Func),' ; ','Algorithm Type :',Algorithm]);
+%     
+%      %legend(Legend2);
+% 
+% 
+%     %case 'PSO'
+%     
+%     elseif Algorithm==2;
+%          Algorithm='PSO';
+%          
+%         [BestCost BestSolution]=PSO(Npop,Nvar,Func,Nrun,itermax,LB,UB,w,wdamp,c1,c2);
+%       
+%         
+%         
+%            
+%      hold on   
+% BestSolutions=BestCost;
+% P=plt(Nrun,Func,itermax,Algorithm,BestSolutions);
+%         
+%   %legend(['Function No :',num2str(Func),' ; ','Algorithm Type :',Algorithm]);      
+% %end
+% 
+%         end
+%         
+%         
+%         
+%     end
+% 
+%   
+%  
+%     
+%     
+%  end
  
  
  
  
  
-kads=1; 
+ 
+ 
+% kads=1; 
  
