@@ -21,7 +21,6 @@ fl=2; % Flight length (fl)
  c1=2;           % Personahl Learning Coefficient
  c2=2;           % Global Learning Coefficient
  
- 
  Legend2=cell(1,2);
  
 % [Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
@@ -52,7 +51,7 @@ for Func=1:13
  
  hold on
  plot(BestCost,'rd','MarkerSize',8);
- 
+ % PSO
  legend ('New Algorithm','CSA', 'PSO');
  
  

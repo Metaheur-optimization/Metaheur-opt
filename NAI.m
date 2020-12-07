@@ -34,11 +34,6 @@ x(:,2)=-10 + (10+10)*rand(N,1);
 % %%%%%%%%%%%%%% New Operators %%%%%%%%%%%%%%%%%%%
 
 
-
-
-
-
-
 Iter
 
 
@@ -51,9 +46,6 @@ OptiVals=(BestFittVals(end,1));
 BestIndex=find(ft==OptiVals);
 
 BestDVs(Iter,:)=x(BestIndex(1),:);
-
-
-
 
 
 % if less than the bervious one
