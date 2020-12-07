@@ -51,7 +51,7 @@ for Func=1:13
  
  hold on
  plot(BestCost,'rd','MarkerSize',8);
- % PSO
+
  legend ('New Algorithm','CSA', 'PSO');
  
  

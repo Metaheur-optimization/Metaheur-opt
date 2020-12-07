@@ -5,7 +5,6 @@ function [BestDVs BestFittVals OptiVals BestSol BestDV Pareto]=NAI(Npop,Nvar,Fun
 pd=Nvar; % Problem dimension (number of decision variables)
 N=Npop; % population size
 FuncNum=Func; %Number of Fitness Function
-
 % x(:,1)=randperm(N,
 X = -10:0.001:10;
 x = (randi([-10,10],N,2)/100);
