@@ -1,6 +1,6 @@
 
 % -------------------------------------------------
-function [Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl)
+function [Global,fit_mem,g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl)
 Global=zeros(Nrun,itermax);
 
 for run=1:Nrun
@@ -8,7 +8,7 @@ pd=Nvar; % Problem dimension (number of decision variables)
 N=Npop; % Flock (population) size
 FuncNum=Func; %Number of Fitness Function
 
-[x l u]=init(N,pd,LB,UB); % Function for initialization
+[x,l,u]=init(N,pd,LB,UB); % Function for initialization
 
 xn=x;
 ft=fitness(xn,N,pd,FuncNum); % Function for fitness evaluation
@@ -34,7 +34,7 @@ for t=1:tmax
     ft=fitness(xn,N,pd,FuncNum); % Function for fitness evaluation of new solutions
 
     for i=1:N % Update position and memory
-        if xnew(i,:)>=l & xnew(i,:)<=u
+        if xnew(i,:)>=l && xnew(i,:)<=u
             x(i,:)=xnew(i,:); % Update position
             if ft(i)<fit_mem(i)
                 mem(i,:)=xnew(i,:); % Update memory

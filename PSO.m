@@ -1,5 +1,5 @@
 
-function [BestCost BestSolution]=PSO(Npop,Nvar,Func,Nrun,itermax,LB,UB,w,wdamp,c1,c2);
+function [BestCost,BestSolution]=PSO(Npop,Nvar,Func,Nrun,itermax,LB,UB,w,wdamp,c1,c2)
 N=Npop;
 pd=Nvar;
 FuncNum=Func;
