@@ -30,16 +30,16 @@ for i=1:N
     xn(i,:)=particle(i).Position;
 end
 
-    % Evaluation
-    ft=fitness(xn,N,pd,FuncNum);
-    %particle(i).Cost=CostFunction(particle(i).Position);
-    
-    for i=1:N
-        particle(i).Cost=ft(i);
-    end
-    
-    
-    for i=1:N
+% Evaluation
+ft=fitness(xn,N,pd,FuncNum);
+%particle(i).Cost=CostFunction(particle(i).Position);
+
+for i=1:N
+    particle(i).Cost=ft(i);
+end
+
+
+for i=1:N
     % Update Personal Best
     particle(i).Best.Position=particle(i).Position;
     particle(i).Best.Cost=particle(i).Cost;
@@ -85,10 +85,10 @@ for it=1:MaxIt
         particle(i).Position = min(particle(i).Position,UB);
     end
     
-for i=1:N
+    for i=1:N
         xn(i,:)=particle(i).Position;
-end
-
+    end
+    
     % Evaluation
     ft=fitness(xn,N,pd,FuncNum);
     %particle(i).Cost=CostFunction(particle(i).Position);
@@ -96,10 +96,10 @@ end
     for i=1:N
         particle(i).Cost=ft(i);
     end
-        
-        % Evaluation
-        %particle(i).Cost = CostFunction(particle(i).Position);
-        for i=1:N
+    
+    % Evaluation
+    %particle(i).Cost = CostFunction(particle(i).Position);
+    for i=1:N
         % Update Personal Best
         if particle(i).Cost<particle(i).Best.Cost
             
@@ -119,15 +119,15 @@ end
     
     BestCost(it)=GlobalBest.Cost;
     
-%     nfe(it)=NFE;
+    %     nfe(it)=NFE;
     
-%     disp(['Iteration ' num2str(it) ': NFE = ' num2str(nfe(it)) ', Best Cost = ' num2str(BestCost(it))]);
-%      disp(['Iteration ' num2str(it)  ', Best Cost = ' num2str(BestCost(it))]);
-
+    %     disp(['Iteration ' num2str(it) ': NFE = ' num2str(nfe(it)) ', Best Cost = ' num2str(BestCost(it))]);
+    %      disp(['Iteration ' num2str(it)  ', Best Cost = ' num2str(BestCost(it))]);
+    
     w=w*wdamp;
-     
+    
     disp(['Iteration ' num2str(it) ' Best Cost = ' num2str(BestCost(it))]);
-     
+    
 end
 % hold on
 % plot(BestCost,'r','linewidth',2)

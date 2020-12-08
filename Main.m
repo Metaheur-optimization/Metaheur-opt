@@ -8,7 +8,7 @@ Nrun=1; %Number of runs
 itermax=5000;  %Maximum number of iterations
 LB=-10; %Lower bound of variables
 UB=10;  %Upper bound of variables
-Algorithm='CSA'; % 'CSA' 'PSO' 
+Algorithm='CSA'; % 'CSA' 'PSO'
 % This is new test
 
 %%Parameters setting for the CSA
@@ -16,17 +16,17 @@ AP=0.1; % Awareness probability
 fl=2; % Flight length (fl)
 
 %%Parameters setting for the PSO
- w=1;            % Inertia Weight
- wdamp=0.99;     % Inertia Weight Damping Ratio
- c1=2;           % Personahl Learning Coefficient
- c2=2;           % Global Learning Coefficient
- 
+w=1;            % Inertia Weight
+wdamp=0.99;     % Inertia Weight Damping Ratio
+c1=2;           % Personahl Learning Coefficient
+c2=2;           % Global Learning Coefficient
+
 
 switch Algorithm
-%%Crow Search Algorithm
+    %%Crow Search Algorithm
     case 'CSA'
-[Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
-
+        [Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
+        
     case 'PSO'
         [BestCost BestSolution]=PSO(Npop,Nvar,Func,Nrun,itermax,LB,UB,w,wdamp,c1,c2);
         
