@@ -8,7 +8,12 @@ pd=Nvar; % Problem dimension (number of decision variables)
 N=Npop; % Flock (population) size
 FuncNum=Func; %Number of Fitness Function
 
-[x l u]=init(N,pd,LB,UB); % Function for initialization
+%%Initialization
+for i=1:N % Generation of initial solutions (position of crows)
+    for j=1:pd
+        x(i,j)=l(j)-(l(j)-u(j))*rand; % Position of the crows in the space
+    end
+end
 
 xn=x;
 ft=fitness(xn,N,pd,FuncNum); % Function for fitness evaluation
