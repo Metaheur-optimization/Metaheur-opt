@@ -6,8 +6,7 @@ Nvar=2;  %Number of decision variables
 Func=2;  %Number of fitness function according to fitness file
 Nrun=1; %Number of runs
 itermax=5000;  %Maximum number of iterations
-LB=-10; %Lower bound of variables
-UB=10;  %Upper bound of variables
+[l u]=BoundaryOfVariables(Func);   %Lower and Upper Bounds of Variables
 Algorithm='CSA';
 
 %%Parameters setting for the CSA
