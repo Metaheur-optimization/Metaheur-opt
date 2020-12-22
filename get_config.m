@@ -1,7 +1,7 @@
 function out = get_config(caseString)
 
 out = [];
-switch lower(caseString)
+switch upper(caseString)
     case 'CSA'
         %%Common parameters setting
         out.Npop = 20;  %Population size
@@ -28,7 +28,7 @@ switch lower(caseString)
         out.wdamp = 0.99;     % Inertia Weight Damping Ratio
         out.c1 = 2;           % Personahl Learning Coefficient
         out.c2 = 2;           % Global Learning Coefficient
-    case 'GA'
+    case GA
         out.Npop = 20;  %Population size
         out.crossover_type = 'two-points';   % type of crossover, --> single_point, two_points,  
         out.crossover_prob = 0.9;  % probability of crossover

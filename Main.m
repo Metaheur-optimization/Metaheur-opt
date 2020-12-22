@@ -1,5 +1,5 @@
 % %The main file to set the algorithms and run for CSA, PSO, and GA
-% format long; close all; clear all; clc
+format long; close all; clear all; clc
 % %%Common parameters setting
 % Npop=20;  %Population size
 % Nvar=2;  %Number of decision variables
