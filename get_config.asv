@@ -1,7 +1,7 @@
 function out = get_config(caseString)
 
 out = [];
-switch caseString
+switch upper(caseString)
     case 'CSA'
         %%Common parameters setting
         out.Npop = 20;  %Population size
@@ -28,9 +28,23 @@ switch caseString
         out.wdamp = 0.99;     % Inertia Weight Damping Ratio
         out.c1 = 2;           % Personahl Learning Coefficient
         out.c2 = 2;           % Global Learning Coefficient
-    case 'GA'
-        out.Npop = 20;  %Population size
-        out.crossover_type = 'two-points';   % type of crossover, --> single_point, two_points,  
-        out.crossover_prob = 0.9;  % probability of crossover
-        out.mutation_prob = 0.05;   % probability of Mutation
+    case 'MGA'
+%         out.Npop = 20;  %Population size
+%         out.crossover_type = 'two-points';   % type of crossover, --> single_point, two_points,  
+%         out.crossover_prob = 0.9;  % probability of crossover
+%         out.mutation_prob = 0.05;   % probability of Mutation
+
+%% GA Parameters
+out.NoPopulation=20 % Population Size
+out.nVar=1;  % Number of Decision Variables
+out.VarMin=-10;
+out.VarMax=10;
+out.MaxIt=1000;
+out.pc=0.8;                 % Crossover Percentage
+pm=0.3;                 % Mutation Percentage
+out.mu=0.02;         % Mutation Rate
+out.ParrentSlectionType='Tournament'   % Slection Type: 'Roulette Wheel','Tournament','Random','Roulette Wheel'
+out
+
+
 end
