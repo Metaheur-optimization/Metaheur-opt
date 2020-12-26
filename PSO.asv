@@ -28,7 +28,7 @@ for iRun=1:Out.NRun
     for i=1:Npopulation
         
         % Initialize Position
-        particle(i).Position=unifrnd(LowerBound,UpperBound,[1,NDecisionVariable]);
+        particle(i).Position=unifrnd(LB,UB,[1,NDecisionVariable]);
         
         % Initialize Velocity
         particle(i).Velocity=zeros([1,NDecisionVariable]);

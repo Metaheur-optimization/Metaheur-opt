@@ -5,10 +5,12 @@ Out = [];
 Out.Npopulation = 20;  %Population size
 Out.NDecisionVariable = 2;  %Number of decision variables
 Out.Function = 2;  %Number of fitness function according to fitness file
-Out.NRun = 1; %Number of runs
-Out.MaxIter = 5000;  %Maximum number of iterations
-Out.LowerBound = -10; %Lower bound of variables
-Out.UpperBound = 10;  %Upper bound of variables
+Out.NRun = 20; %Number of runs
+Out.MaxIter = 500;  %Maximum number of iterations
+Out.LowerBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
+Out.UpperBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
+Out.LowerBound(:) = -10; %Lower bound of variables
+Out.UpperBound(:) = 10;  %Upper bound of variables
 
 switch upper(caseString)
     case 'CSA'

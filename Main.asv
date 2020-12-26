@@ -1,7 +1,7 @@
 % %The main file to set the algorithms and run for CSA, PSO, and GA
 format long; close all; clc
 
-Algorithm='PSO'; 
+Algorithm='CSA'; 
 
 Out = get_config(Algorithm);
 
@@ -15,7 +15,7 @@ switch Algorithm
         
 end
 
-disp(['run =   ',num2str(Out.NRun),'  iter =   ',num2str(Out.MaxIter)])
+disp(['run =   ',num2str(Out.NRun),'  iter =   ',num2str(Out.MaxIter),' BEST Fitness= ',num2str(AllBestFitnesses(end))])
 for i=1:Out.NRun
     plot(AllBestFitnesses(i,1:50))
     hold on
