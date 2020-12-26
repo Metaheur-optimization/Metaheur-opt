@@ -1,53 +1,55 @@
 
 % -------------------------------------------------
-function [Global,fit_mem,g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl)
-Global=zeros(Nrun,itermax);
+function [Global,fitnessMemory,g_best]=CSA(Out)
+Global=zeros(Out.NRun,Out.MaxIter);
 
-for run=1:Nrun
-    pd=Nvar; % Problem dimension (number of decision variables)
-    N=Npop; % Flock (population) size
-    FuncNum=Func; %Number of Fitness Function
+Npopulation=Out.Npopulation; % Flock (population) size
+NDecisionVariable=Out.NDecisionVariable; % Problem dimension (number of decision variables)
+LowerBound=Out.LowerBound;
+UpperBound=Out.UpperBound;
+AP=Out.AP;
+fl=Out.fl;
+
+for iRun=1:Out.NRun
     
-    [x,l,u]=init(N,pd,LB,UB); % Function for initialization
+    InitArray=init(Out); % Function for initialization
     
-    xn=x;
-    ft=fitness(xn,N,pd,FuncNum); % Function for fitness evaluation
+    ft=fitness(InitArray,Out); % Function for fitness evaluation
     
-    mem=x; % Memory initialization
-    fit_mem=ft; % Fitness of memory positions
+    Memory=InitArray; % initialization of Memory of each Crow
+    fitnessMemory=ft; % Fitness of memory positions
     
-    tmax=itermax; % Maximum number of iterations (itermax)
-    for t=1:tmax
-        
-        num=ceil(N*rand(1,N)); % Generation of random candidate crows for following (chasing)
-        for i=1:N
+    Bestfitness=zeros(Out.MaxIter);
+    
+    %Main loop of iteration
+    Xnew=zeros(Npopulation,NDecisionVariable);
+    for iIter=1:Out.MaxIter % Maximum number of iterations (itermax)
+        num=ceil(Npopulation*rand(1,Npopulation)); % Generation of random candidate crows for following (chasing)
+        for i=1:Npopulation
             if rand>AP
-                xnew(i,:)= x(i,:)+fl*rand*(mem(num(i),:)-x(i,:)); % Generation of a new position for crow i (state 1)
+                Xnew(i,:)= InitArray(i,:)+fl*rand*(Memory(num(i),:)-InitArray(i,:)); % Generation of a new position for crow i (state 1)
             else
-                for j=1:pd
-                    xnew(i,j)=l-(l-u)*rand; % Generation of a new position for crow i (state 2)
+                for j=1:NDecisionVariable
+                    Xnew(i,j)=LowerBound-(LowerBound-UpperBound)*rand; % Generation of a new position for crow i (state 2)
                 end
             end
         end
         
-        xn=xnew;
-        ft=fitness(xn,N,pd,FuncNum); % Function for fitness evaluation of new solutions
+        ft=fitness(Xnew,Out); % Function for fitness evaluation of new solutions
         
-        for i=1:N % Update position and memory
-            if xnew(i,:)>=l && xnew(i,:)<=u
-                x(i,:)=xnew(i,:); % Update position
-                if ft(i)<fit_mem(i)
-                    mem(i,:)=xnew(i,:); % Update memory
-                    fit_mem(i)=ft(i);
+        for i=1:Npopulation % Update position and memory
+            if Xnew(i,:)>=LowerBound && Xnew(i,:)<=UpperBound
+                InitArray(i,:)=Xnew(i,:); % Update position
+                if ft(i)<fitnessMemory(i)
+                    Memory(i,:)=Xnew(i,:); % Update memory
+                    fitnessMemory(i)=ft(i);
                 end
             end
         end
-        
-        ffit(t)=min(fit_mem); % Best found value until iteration t
-        best_=min(fit_mem);
-        disp([ 'run =   ' num2str(run)     '  iter =   '  num2str(t)   ' BEST = '  num2str(best_)])
+        Bestfitness(iIter)=min(fitnessMemory); % Best found value until iteration t
+        disp([ 'run =   ' num2str(iRun)     '  iter =   '  num2str(iIter)   ' BEST = '  num2str(Bestfitness(iIter))])
     end
-    ngbest=find(fit_mem== min(fit_mem));
-    g_best=mem(ngbest(1),:); % Solutin of the problem
-    Global(run,:)=ffit;
+    ngbest=find(fitnessMemory== min(fitnessMemory));
+    g_best=Memory(ngbest(1),:); % Solutin of the problem
+    Global(iRun,:)=Bestfitness;
 end

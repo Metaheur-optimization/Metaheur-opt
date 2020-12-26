@@ -1,7 +1,9 @@
 % %The main file to set the algorithms and run for CSA, PSO, and GA
 format long; close all; clc
 
-Out = get_config('PSO');
+Algorithm='CSA'; 
+
+Out = get_config(Algorithm);
 
 switch Algorithm
     %%Crow Search Algorithm

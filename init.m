@@ -1,11 +1,11 @@
+function InitArray=init(Out) % Function for initialization
 
+LB=Out.LowerBound; UB=Out.UpperBound; % Lower and upper bounds
 
-function [x l u]=init(N,pd,LB,UB) % Function for initialization
+InitArray=zeros(Out.Npopulation,Out.NDecisionVariable);
 
-l=LB; u=UB; % Lower and upper bounds
-
-for i=1:N % Generation of initial solutions (position of crows)
-    for j=1:pd
-        x(i,j)=l-(l-u)*rand; % Position of the crows in the space
+for i=1:Out.Npopulation % Generation of initial solutions (position of crows)
+    for j=1:Out.NDecisionVariable
+        InitArray(i,j)=LB-(LB-UB)*rand; % Position of the crows in the space
     end
 end
