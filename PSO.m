@@ -1,7 +1,9 @@
 %% PSO first modified by KB 26 Dec 2020
 function [AllBestFitnesses,BestSolution]=PSO(Out)
 %% Setting and definition of variables
-rng('default')
+% rng('default')
+rng(2)
+
 AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
 Npopulation=Out.Npopulation; % Flock (population) size
 NDecisionVariable=Out.NDecisionVariable; % Problem dimension (number of decision variables)

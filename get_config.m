@@ -3,14 +3,15 @@ function Out = get_config(caseString)
 Out = [];
 %%Common parameters setting
 Out.Npopulation = 20;  %Population size
-Out.NDecisionVariable = 2;  %Number of decision variables
-Out.Function = 3;  %Number of fitness function according to fitness file
+Out.NDecisionVariable = 5;  %Number of decision variables
+Out.Function = 12;  %Number of Mathematical function according to fitness file
+Out.EngFunction = 3;  %Number of Engineering function according to Engineering Function file
 Out.NRun = 20; %Number of runs
 Out.MaxIter = 500;  %Maximum number of iterations
 Out.LowerBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
 Out.UpperBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
-Out.LowerBound(:) = -10; %Lower bound of variables
-Out.UpperBound(:) = 10;  %Upper bound of variables
+Out.LowerBound(:) = 0; %Lower bound of variables
+Out.UpperBound(:) = pi;  %Upper bound of variables
 
 switch upper(caseString)
     case 'CSA'
