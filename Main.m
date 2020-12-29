@@ -9,10 +9,10 @@ Out = get_config(Algorithm);
 switch Algorithm
     %%Crow Search Algorithm
     case 'CSA'
-        [AllBestFitnesses,BestSolution]=CSA(Out);
+        [AllBestFitnesses,AllBestSolution]=CSA(Out);
         
     case 'PSO'
-        [AllBestFitnesses,BestSolution]=PSO(Out);
+        [AllBestFitnesses,AllBestSolution]=PSO(Out);
         
 end
 
@@ -25,7 +25,11 @@ disp(['No of Runs=',num2str(Out.NRun),' No of Iteration=',num2str(Out.MaxIter),.
 %     hold on
 % end
 B=mean(AllBestFitnesses);
-plot(B(1,1:500))
-C=mean(B)
+plot(B(1,1:1000))
+C=mean(AllBestFitnesses, 'all')
+Average=mean(AllBestFitnesses(:,end));
+Worst=max(AllBestFitnesses(:,end));
+Best=min(AllBestFitnesses(:,end));
+StdDeviation=std(AllBestFitnesses(:,end));
 
 toc
