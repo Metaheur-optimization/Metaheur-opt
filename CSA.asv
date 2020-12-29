@@ -35,7 +35,7 @@ for iRun=1:Out.NRun
         end
         
         
-        % Apply Position Limits (Suggested by KB 26 Dec 2020)
+        % Apply Position Limits
         Xnew(i,:) = max(Xnew(i,:),transpose(LowerBound(:,1)));
         Xnew(i,:) = min(Xnew(i,:),transpose(UpperBound(:,1)));
 
@@ -51,8 +51,8 @@ for iRun=1:Out.NRun
             end
             if(Bool==1)
                 Position(i,:)=Xnew(i,:); % Update position
-                if fitne(i)<fitnessMemory(i)% Update memory only if fitness is better
-                    PositionMemory(i,:)=Xnew(i,:); 
+                if fitne(i)<fitnessMemory(i)
+                    PositionMemory(i,:)=Xnew(i,:); % Update memory
                     fitnessMemory(i)=fitne(i);
                 end
             end

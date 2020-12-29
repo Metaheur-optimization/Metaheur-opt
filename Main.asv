@@ -2,7 +2,7 @@
 tic
 format long; close all; clc; clear; 
 
-Algorithm='CSA'; 
+Algorithm='PSO'; 
 
 Out = get_config(Algorithm);
 
@@ -16,12 +16,10 @@ switch Algorithm
         
 end
 
-disp(['No of Runs=',num2str(Out.NRun),' No of Iteration=',num2str(Out.MaxIter),...
-    ' Population Size=',num2str(Out.Npopulation)])
+disp(['run =',num2str(Out.NRun),' No of Iteration =',num2str(Out.MaxIter),...
+    ' population size=',num2str(Out.Npopulation)])
 for i=1:Out.NRun
     plot(AllBestFitnesses(i,1:50))
-    xlabel('No of Iteration')
-    ylabel('Fitness value')
     hold on
 end
 toc
