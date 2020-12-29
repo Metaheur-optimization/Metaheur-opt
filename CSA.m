@@ -1,7 +1,8 @@
 %% CSA first modified by KB 25 Dec 2020
 function [AllBestFitnesses,BestSolution]=CSA(Out)
 %% Setting and definition of variables
-rng('default')
+% rng('default')
+rng(2)
 AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
 Npopulation=Out.Npopulation; % Flock (population) size
 NDecisionVariable=Out.NDecisionVariable; % Problem dimension (number of decision variables)
@@ -35,9 +36,9 @@ for iRun=1:Out.NRun
         end
         
         
-        % Apply Position Limits (Suggested by KB 26 Dec 2020)
-        Xnew(i,:) = max(Xnew(i,:),transpose(LowerBound(:,1)));
-        Xnew(i,:) = min(Xnew(i,:),transpose(UpperBound(:,1)));
+%         % Apply Position Limits (Suggested by KB 26 Dec 2020)
+%         Xnew(i,:) = max(Xnew(i,:),transpose(LowerBound(:,1)));
+%         Xnew(i,:) = min(Xnew(i,:),transpose(UpperBound(:,1)));
 
         fitne=fitness(Xnew,Out); % Function for fitness evaluation of new solutions
         

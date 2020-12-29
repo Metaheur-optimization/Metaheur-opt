@@ -18,10 +18,14 @@ end
 
 disp(['No of Runs=',num2str(Out.NRun),' No of Iteration=',num2str(Out.MaxIter),...
     ' Population Size=',num2str(Out.Npopulation)])
-for i=1:Out.NRun
-    plot(AllBestFitnesses(i,1:50))
-    xlabel('No of Iteration')
-    ylabel('Fitness value')
-    hold on
-end
+% for i=1:Out.NRun
+%     plot(AllBestFitnesses(i,1:50))
+%     xlabel('No of Iteration')
+%     ylabel('Fitness value')
+%     hold on
+% end
+B=mean(AllBestFitnesses);
+plot(B(1,1:500))
+C=mean(B)
+
 toc
