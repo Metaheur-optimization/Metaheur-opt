@@ -2,12 +2,12 @@ function Out = get_config(caseString)
 
 Out = [];
 %%Common parameters setting
-Out.Npopulation = 20;  %Population size
-Out.NDecisionVariable = 5;  %Number of decision variables
+Out.Npopulation = 50;  %Population size
+Out.NDecisionVariable = 3;  %Number of decision variables
 Out.Function = 12;  %Number of Mathematical function according to fitness file
-Out.EngFunction = 3;  %Number of Engineering function according to Engineering Function file
-Out.NRun = 20; %Number of runs
-Out.MaxIter = 500;  %Maximum number of iterations
+Out.EngFunction = 2;  %Number of Engineering function according to Engineering Function file
+Out.NRun = 50; %Number of runs
+Out.MaxIter = 1000;  %Maximum number of iterations
 Out.LowerBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
 Out.UpperBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
 Out.LowerBound(:) = 0; %Lower bound of variables

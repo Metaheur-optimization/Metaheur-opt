@@ -1,9 +1,10 @@
 %% CSA first modified by KB 25 Dec 2020
-function [AllBestFitnesses,BestSolution]=CSA(Out)
+function [AllBestFitnesses,AllBestSolution]=CSA(Out)
 %% Setting and definition of variables
 % rng('default')
 rng(2)
 AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
+AllBestSolution=zeros(Out.NRun,Out.NDecisionVariable);
 Npopulation=Out.Npopulation; % Flock (population) size
 NDecisionVariable=Out.NDecisionVariable; % Problem dimension (number of decision variables)
 LowerBound=Out.LowerBound;
@@ -11,13 +12,15 @@ UpperBound=Out.UpperBound;
 AP=Out.AP;
 fl=Out.fl;
 %%Define structure for the array of solutions
-Memory=zeros(Npopulation,NDecisionVariable);
+% Memory=zeros(Npopulation,NDecisionVariable);
 
 %% Main loop of indepdendent runs
 for iRun=1:Out.NRun
     %% initialization
     Position=init(Out); % Initialization of solutions
-    fitnessMemory=fitness(Position,Out); % Fitness evaluation
+    Position(1,:)=[0.0516890284000, 0.3567169544000, 11.2890117993000];
+    %     fitnessMemory=fitness(Position,Out); % Fitness evaluation
+    [fitnessMemory,LowerBound, UpperBound]=EngineeringFunctions(Position,Out); % Fitness evaluation
     PositionMemory=Position; % Memorise Position of solutions
     
     %% CSA Main Loop
@@ -36,11 +39,12 @@ for iRun=1:Out.NRun
         end
         
         
-%         % Apply Position Limits (Suggested by KB 26 Dec 2020)
-%         Xnew(i,:) = max(Xnew(i,:),transpose(LowerBound(:,1)));
-%         Xnew(i,:) = min(Xnew(i,:),transpose(UpperBound(:,1)));
-
-        fitne=fitness(Xnew,Out); % Function for fitness evaluation of new solutions
+                % Apply Position Limits (Suggested by KB 26 Dec 2020)
+                Xnew(i,:) = max(Xnew(i,:),transpose(LowerBound(:,1)));
+                Xnew(i,:) = min(Xnew(i,:),transpose(UpperBound(:,1)));
+        
+        %     fitne=fitness(Position,Out); % Fitness evaluation
+        [fitne,LowerBound, UpperBound]=EngineeringFunctions(Position,Out); % Fitness evaluation
         
         for i=1:Npopulation % Update position and memory
             Bool=1;
@@ -53,7 +57,7 @@ for iRun=1:Out.NRun
             if(Bool==1)
                 Position(i,:)=Xnew(i,:); % Update position
                 if fitne(i)<fitnessMemory(i)% Update memory only if fitness is better
-                    PositionMemory(i,:)=Xnew(i,:); 
+                    PositionMemory(i,:)=Xnew(i,:);
                     fitnessMemory(i)=fitne(i);
                 end
             end
@@ -64,6 +68,6 @@ for iRun=1:Out.NRun
     
     %% Saving results of the solution
     [~,ngbest]=min(fitnessMemory);
-    BestSolution=Memory(ngbest(1),:); % Solutin of the problem
-    AllBestFitnesses(iRun,:)=Bestfit;    
+    AllBestSolution(iRun,:)=PositionMemory(ngbest(1),:); % Solutin of the problem
+    AllBestFitnesses(iRun,:)=Bestfit;
 end

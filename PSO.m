@@ -1,10 +1,11 @@
 %% PSO first modified by KB 26 Dec 2020
-function [AllBestFitnesses,BestSolution]=PSO(Out)
+function [AllBestFitnesses,AllBestSolution]=PSO(Out)
 %% Setting and definition of variables
 % rng('default')
 rng(2)
 
 AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
+AllBestSolution=zeros(Out.NRun,Out.NDecisionVariable);
 Npopulation=Out.Npopulation; % Flock (population) size
 NDecisionVariable=Out.NDecisionVariable; % Problem dimension (number of decision variables)
 LowerBound=Out.LowerBound;
@@ -30,7 +31,8 @@ VelMin=-VelMax;
 for iRun=1:Out.NRun
     %% Initialisation
     Position=init(Out); % Initialization of solutions
-    Fitness=fitness(Position,Out); % Fitness evaluation
+%     Fitness =fitness(Position,Out); % Fitness evaluation
+    [Fitness,LowerBound, UpperBound]=EngineeringFunctions(Position,Out); % Fitness evaluation
     Best.Position=Position;
     Best.Fitness=Fitness;
     
@@ -55,16 +57,17 @@ for iRun=1:Out.NRun
             % Update Position
             Position(i,:) = Position(i,:)+ Velocity(i,:);
             
-%             % Velocity Mirror Effect
-%             IsOutside=(Position(i,:)<LowerBound(1,:) | Position(i,:)>UpperBound(1,:));
-%             Velocity(i,IsOutside)=-Velocity(i,IsOutside);
+            % Velocity Mirror Effect
+            IsOutside=(Position(i,:)<LowerBound(1,:) | Position(i,:)>UpperBound(1,:));
+            Velocity(i,IsOutside)=-Velocity(i,IsOutside);
             
             % Apply Position Limits
             Position(i,:) = max(Position(i,:),LowerBound(1,:));
             Position(i,:) = min(Position(i,:),UpperBound(1,:));
         end
         
-        Fitness=fitness(Position,Out); % Fitness evaluation
+        %     Fitness =fitness(Position,Out); % Fitness evaluation
+        [Fitness,LowerBound, UpperBound]=EngineeringFunctions(Position,Out); % Fitness evaluation
         
         % Evaluation
         for i=1:Npopulation
@@ -88,6 +91,6 @@ for iRun=1:Out.NRun
     end
     
     %% Saving results of the solution
-    BestSolution=GlobalBest.Position;
+    AllBestSolution(iRun,:)=GlobalBest.Position;
     AllBestFitnesses(iRun,:)=Bestfit;
 end
