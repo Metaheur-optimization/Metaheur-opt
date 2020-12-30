@@ -16,8 +16,8 @@ Out.UpperBound(:) = pi;  %Upper bound of variables
 switch upper(caseString)
     case 'CSA'
         %%Parameters setting for the CSA
-        Out.AP = 0.1; % Awareness probability
-        Out.fl = 2; % Flight length (fl)
+        Out.AP = 0.20; % Awareness probability
+        Out.fl = 3.0; % Flight length (fl)
     case 'PSO'
         %%Parameters setting for the PSO
         Out.InterWeight = 1;            % Inertia Weight
