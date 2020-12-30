@@ -1,26 +1,29 @@
 %% CSA first modified by KB 25 Dec 2020
 function [AllBestFitnesses,AllBestSolution]=CSA(Out)
 %% Setting and definition of variables
-% rng('default')
-rng(2)
+rng('default')
+% rng(2)
 AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
 AllBestSolution=zeros(Out.NRun,Out.NDecisionVariable);
+
 Npopulation=Out.Npopulation; % Flock (population) size
 NDecisionVariable=Out.NDecisionVariable; % Problem dimension (number of decision variables)
-LowerBound=Out.LowerBound;
-UpperBound=Out.UpperBound;
+fitnessMemory=zeros(1,Npopulation);
+% LowerBound=Out.LowerBound;
+% UpperBound=Out.UpperBound;
+[LowerBound, UpperBound]=EngineeringBounds(Out.EngFunction);
 AP=Out.AP;
 fl=Out.fl;
-%%Define structure for the array of solutions
-% Memory=zeros(Npopulation,NDecisionVariable);
 
 %% Main loop of indepdendent runs
 for iRun=1:Out.NRun
     %% initialization
     Position=init(Out); % Initialization of solutions
-    Position(1,:)=[0.0516890284000, 0.3567169544000, 11.2890117993000];
-    %     fitnessMemory=fitness(Position,Out); % Fitness evaluation
-    [fitnessMemory,LowerBound, UpperBound]=EngineeringFunctions(Position,Out); % Fitness evaluation
+%     Position(1,:)=[0.0516890284000, 0.3567169544000, 11.2890117993000];
+    for i=1:Npopulation
+        %     fitnessMemory=fitness(Position,i,Out); % Fitness evaluation
+        fitnessMemory(i)=EngineeringFitness(Position,i,Out); % Fitness evaluation
+    end
     PositionMemory=Position; % Memorise Position of solutions
     
     %% CSA Main Loop
@@ -36,17 +39,7 @@ for iRun=1:Out.NRun
             else
                 Xnew(i,:)=LowerBound(:,1)+(UpperBound(:,1)-LowerBound(:,1))*rand; % Generation of a new position for crow i (state 2)
             end
-        end
-        
-        
-                % Apply Position Limits (Suggested by KB 26 Dec 2020)
-                Xnew(i,:) = max(Xnew(i,:),transpose(LowerBound(:,1)));
-                Xnew(i,:) = min(Xnew(i,:),transpose(UpperBound(:,1)));
-        
-        %     fitne=fitness(Position,Out); % Fitness evaluation
-        [fitne,LowerBound, UpperBound]=EngineeringFunctions(Position,Out); % Fitness evaluation
-        
-        for i=1:Npopulation % Update position and memory
+            
             Bool=1;
             for j=1:NDecisionVariable % Update position and memory
                 if Xnew(i,j)<=LowerBound(j) || Xnew(i,j)>=UpperBound(j)
@@ -56,9 +49,11 @@ for iRun=1:Out.NRun
             end
             if(Bool==1)
                 Position(i,:)=Xnew(i,:); % Update position
-                if fitne(i)<fitnessMemory(i)% Update memory only if fitness is better
+                %     fitne=fitness(Position,Out); % Fitness evaluation
+                fitne=EngineeringFitness(Position,i,Out); % Fitness evaluation
+                if fitne<fitnessMemory(i)% Update memory only if fitness is better
                     PositionMemory(i,:)=Xnew(i,:);
-                    fitnessMemory(i)=fitne(i);
+                    fitnessMemory(i)=fitne;
                 end
             end
         end

@@ -1,15 +1,16 @@
 %% PSO first modified by KB 26 Dec 2020
 function [AllBestFitnesses,AllBestSolution]=PSO(Out)
 %% Setting and definition of variables
-% rng('default')
-rng(2)
+rng('default')
+% rng(2)
 
 AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
 AllBestSolution=zeros(Out.NRun,Out.NDecisionVariable);
 Npopulation=Out.Npopulation; % Flock (population) size
 NDecisionVariable=Out.NDecisionVariable; % Problem dimension (number of decision variables)
-LowerBound=Out.LowerBound;
-UpperBound=Out.UpperBound;
+% LowerBound=Out.LowerBound;
+% UpperBound=Out.UpperBound;
+[LowerBound, UpperBound]=EngineeringBounds(Out.EngFunction);
 InterWeight=Out.InterWeight;% Inertia Weight
 DampRatio=Out.DampRatio;% Inertia Weight Damping Ratio
 c1=Out.c1; % Personahl Learning Coefficient
@@ -31,11 +32,11 @@ VelMin=-VelMax;
 for iRun=1:Out.NRun
     %% Initialisation
     Position=init(Out); % Initialization of solutions
-%     Fitness =fitness(Position,Out); % Fitness evaluation
-    [Fitness,LowerBound, UpperBound]=EngineeringFunctions(Position,Out); % Fitness evaluation
+    %     Fitness =fitness(Position,Out); % Fitness evaluation
+    for i=1:Npopulation
+        Best.Fitness(i)=EngineeringFitness(Position,i,Out); % Fitness evaluation
+    end
     Best.Position=Position;
-    Best.Fitness=Fitness;
-    
     [GlobalBest.Fitness, LocationMin]=min(Best.Fitness);
     GlobalBest.Position(:)=Best.Position(LocationMin(1),:);
     
@@ -61,25 +62,29 @@ for iRun=1:Out.NRun
             IsOutside=(Position(i,:)<LowerBound(1,:) | Position(i,:)>UpperBound(1,:));
             Velocity(i,IsOutside)=-Velocity(i,IsOutside);
             
-            % Apply Position Limits
-            Position(i,:) = max(Position(i,:),LowerBound(1,:));
-            Position(i,:) = min(Position(i,:),UpperBound(1,:));
-        end
-        
-        %     Fitness =fitness(Position,Out); % Fitness evaluation
-        [Fitness,LowerBound, UpperBound]=EngineeringFunctions(Position,Out); % Fitness evaluation
-        
-        % Evaluation
-        for i=1:Npopulation
-            % Update Personal Best
-            if Fitness(i)<Best.Fitness(i)
-                Best.Position(i,:)=Position(i,:);
-                Best.Fitness(i)=Fitness(i);
-                
-                % Update Global Best
-                if Best.Fitness(i)<GlobalBest.Fitness
-                    GlobalBest.Position(:)=Best.Position(i,:);
-                    GlobalBest.Fitness=Best.Fitness(i);
+            %             % Apply Position Limits
+            %             Position(i,:) = max(Position(i,:),LowerBound(1,:));
+            %             Position(i,:) = min(Position(i,:),UpperBound(1,:));
+            Bool=1;
+            for j=1:NDecisionVariable % Update position and memory
+                if Position(i,j)<=LowerBound(j) || Position(i,j)>=UpperBound(j)
+                    Bool=0;
+                    break
+                end
+            end
+            if(Bool==1)
+                %     Fitness =fitness(Position,Out); % Fitness evaluation
+                Fitn=EngineeringFitness(Position,i,Out); % Fitness evaluation
+                % Update Personal Best
+                if Fitn<Best.Fitness(i)
+                    Best.Position(i,:)=Position(i,:);
+                    Best.Fitness(i)=Fitn;
+                    
+                    % Update Global Best
+                    if Best.Fitness(i)<GlobalBest.Fitness
+                        GlobalBest.Position(:)=Best.Position(i,:);
+                        GlobalBest.Fitness=Best.Fitness(i);
+                    end
                 end
             end
         end

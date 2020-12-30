@@ -2,7 +2,7 @@
 tic
 format long; close all; clc; clear; 
 
-Algorithm='CSA'; 
+Algorithm='PSO'; 
 
 Out = get_config(Algorithm);
 
