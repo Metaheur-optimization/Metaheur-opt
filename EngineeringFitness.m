@@ -1,19 +1,15 @@
-function ft=EngineeringFitness(X,i,Out) % Function for EngineeringFunctions evaluation
+function ft=EngineeringFitness(X,i,EngFunction) % Function for EngineeringFunctions evaluation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%Engineering problems fitness functions and variables%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Fitness function:
-Npopulation=Out.Npopulation;
-ft=zeros(Npopulation,1);
 
 
-switch Out.EngFunction
+switch EngFunction
     %% 1. Three bar truss problem
     case 1
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         g=zeros(1,3);                %Constraint function values
         penalty=zeros(1,3);                   %Penalty values
-        penalty_constant=1*10^6;                       %Penalty constant
         
         g(1)=((sqrt(2)*X(i,1)+X(i,2))/(sqrt(2)*X(i,1)^2 +(2*X(i,1)*X(i,2))))*2 -2;
         g(2)=(X(i,2)/(sqrt(2)*X(i,1)^2 +(2*X(i,1)*X(i,2))))*2 -2;
@@ -23,7 +19,7 @@ switch Out.EngFunction
             if g(j)<=0
                 penalty(j)=0;
             else
-                penalty(j)=penalty_constant*(1+g(j));
+                penalty(j)=1*10^6*(1+g(j));
             end
         end
         
@@ -34,8 +30,9 @@ switch Out.EngFunction
         %% 2. Tension problem
     case 2
         g=zeros(1,4);                  %Constraint functions values
-        penalty=zeros(1,4);                     %Penalty Values
-        penalty_constant=5*10^6;                         %Penalty constant
+        %         penalty=zeros(1,4);                     %Penalty Values
+        penalty=0;
+        
         
         g(1)=1-((X(i,2)^3 *X(i,3))/(71785*X(i,1)^4));
         g(2)=((4*X(i,2)^2 -X(i,1)*X(i,2))/(12566*(X(i,2)*X(i,1)^3 -X(i,1)^4)))+ (1/(5108*X(i,1)^2))- 1;
@@ -43,16 +40,14 @@ switch Out.EngFunction
         g(4)=((X(i,1)+X(i,2))/1.5)-1;
         
         for j=1:4
-            if g(j)<=0
-                penalty(j)=0;
-            else
-                penalty(j)=penalty_constant*(1+g(j));
+            if g(j)>0
+                penalty=penalty+5*10^6*(1+g(j));
             end
         end
         
         cost =(X(i,3)+2)*X(i,2)*X(i,1)^2;
         
-        ft=cost+abs(sum(penalty));
+        ft=cost+penalty;
         %% 3. Welded beam problem
     case 3
         %% Constants
@@ -61,7 +56,6 @@ switch Out.EngFunction
         %% Initialize
         g=zeros(1,7);               %Constaint function values
         penalty=zeros(1,7);                  %Penalty values
-        penalty_constant=5;                           %Penalty constant
         
         %% Equations
         Pc=64746.022*(1-0.0282346*X(i,3))*X(i,3)*X(i,4)^3;
@@ -86,7 +80,7 @@ switch Out.EngFunction
             if g(j)<=0
                 penalty(j)=0;
             else
-                penalty(j)=penalty_constant*(1+g(j));
+                penalty(j)=5*(1+g(j));
             end
         end
         
@@ -100,7 +94,6 @@ switch Out.EngFunction
         p=zeros(1,11);
         g=zeros(1,11);
         penalty=zeros(1,11);
-        penalty_constant=0.2*10^2;
         
         g(1)=(27/(X(i,1)*X(i,3)*X(i,2)^2))-1;
         g(2)=(397.5/(X(i,1)*X(i,2)^2 *X(i,3)^2))-1;
@@ -118,7 +111,7 @@ switch Out.EngFunction
             if g(j)<=0
                 penalty(j)=0;
             else
-                p(j)=penalty_constant*(1+g(j));
+                p(j)=0.2*10^2*(1+g(j));
             end
         end
         

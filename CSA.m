@@ -22,7 +22,7 @@ for iRun=1:Out.NRun
 %     Position(1,:)=[0.0516890284000, 0.3567169544000, 11.2890117993000];
     for i=1:Npopulation
         %     fitnessMemory=fitness(Position,i,Out); % Fitness evaluation
-        fitnessMemory(i)=EngineeringFitness(Position,i,Out); % Fitness evaluation
+        fitnessMemory(i)=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
     end
     PositionMemory=Position; % Memorise Position of solutions
     
@@ -50,7 +50,7 @@ for iRun=1:Out.NRun
             if(Bool==1)
                 Position(i,:)=Xnew(i,:); % Update position
                 %     fitne=fitness(Position,Out); % Fitness evaluation
-                fitne=EngineeringFitness(Position,i,Out); % Fitness evaluation
+                fitne=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
                 if fitne<fitnessMemory(i)% Update memory only if fitness is better
                     PositionMemory(i,:)=Xnew(i,:);
                     fitnessMemory(i)=fitne;

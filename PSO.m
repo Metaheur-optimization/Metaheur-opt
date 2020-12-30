@@ -34,7 +34,7 @@ for iRun=1:Out.NRun
     Position=init(Out); % Initialization of solutions
     %     Fitness =fitness(Position,Out); % Fitness evaluation
     for i=1:Npopulation
-        Best.Fitness(i)=EngineeringFitness(Position,i,Out); % Fitness evaluation
+        Best.Fitness(i)=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
     end
     Best.Position=Position;
     [GlobalBest.Fitness, LocationMin]=min(Best.Fitness);
@@ -74,7 +74,7 @@ for iRun=1:Out.NRun
             end
             if(Bool==1)
                 %     Fitness =fitness(Position,Out); % Fitness evaluation
-                Fitn=EngineeringFitness(Position,i,Out); % Fitness evaluation
+                Fitn=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
                 % Update Personal Best
                 if Fitn<Best.Fitness(i)
                     Best.Position(i,:)=Position(i,:);
