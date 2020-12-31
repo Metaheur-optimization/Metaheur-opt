@@ -1,11 +1,15 @@
 %% PSO first modified by KB 26 Dec 2020
-function [AllBestFitnesses,AllBestSolution]=PSO(Out)
+function [Results]=PSO(Out)
 %% Setting and definition of variables
 rng('default')
 % rng(2)
 
-AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
-AllBestSolution=zeros(Out.NRun,Out.NDecisionVariable);
+Results.AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
+Results.AllBestSolution=zeros(Out.NRun,Out.NDecisionVariable);
+Results.NFE=0;
+NFE=0;
+Results.PenaltyCount=0;
+PenaltyCount=0;
 Npopulation=Out.Npopulation; % Flock (population) size
 NDecisionVariable=Out.NDecisionVariable; % Problem dimension (number of decision variables)
 % LowerBound=Out.LowerBound;
@@ -32,9 +36,13 @@ VelMin=-VelMax;
 for iRun=1:Out.NRun
     %% Initialisation
     Position=init(Out); % Initialization of solutions
-    %     Fitness =fitness(Position,Out); % Fitness evaluation
     for i=1:Npopulation
-        Best.Fitness(i)=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
+    %     Fitness =fitness(Position,Out); % Fitness evaluation
+        [Best.Fitness(i), BoolPenalty]=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
+        NFE=NFE+1;
+        if BoolPenalty==1
+            PenaltyCount=PenaltyCount+1;
+        end
     end
     Best.Position=Position;
     [GlobalBest.Fitness, LocationMin]=min(Best.Fitness);
@@ -74,7 +82,12 @@ for iRun=1:Out.NRun
             end
             if(Bool==1)
                 %     Fitness =fitness(Position,Out); % Fitness evaluation
-                Fitn=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
+                [Fitn,BoolPenalty]=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
+                if BoolPenalty==1
+                    PenaltyCount=PenaltyCount+1;
+                end
+                NFE=NFE+1;
+
                 % Update Personal Best
                 if Fitn<Best.Fitness(i)
                     Best.Position(i,:)=Position(i,:);
@@ -96,6 +109,8 @@ for iRun=1:Out.NRun
     end
     
     %% Saving results of the solution
-    AllBestSolution(iRun,:)=GlobalBest.Position;
-    AllBestFitnesses(iRun,:)=Bestfit;
+    Results.AllBestSolution(iRun,:)=GlobalBest.Position;
+    Results.AllBestFitnesses(iRun,:)=Bestfit;
 end
+Results.NFE=NFE;
+Results.PenaltyCount=PenaltyCount;

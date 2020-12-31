@@ -9,10 +9,10 @@ Out = get_config(Algorithm);
 switch Algorithm
     %%Crow Search Algorithm
     case 'CSA'
-        [AllBestFitnesses,BestSolution]=CSA(Out);
+        [Results]=CSA(Out);
         
     case 'PSO'
-        [AllBestFitnesses,BestSolution]=PSO(Out);
+        [Results]=PSO(Out);
         
 end
 
@@ -24,9 +24,37 @@ disp(['No of Runs=',num2str(Out.NRun),' No of Iteration=',num2str(Out.MaxIter),.
 %     ylabel('Fitness value')
 %     hold on
 % end
-B=mean(AllBestFitnesses);
-plot(B(1,1:500))
-C=mean(AllBestFitnesses, 'all')
-D=mean(AllBestFitnesses:,end)
+
+
+B=mean(Results.AllBestFitnesses);
+tiledlayout(2,2)
+nexttile
+plot(B(1,1:1000))
+title(['Average Fitness value for Engineering Function number ', num2str(Out.EngFunction)])
+nexttile
+C=mean(Results.NFE);
+plot(C(1,1:1000))
+title('Number of Function Evaluations')
+ylim([0 50])
+nexttile
+D=mean(Results.Feasible);
+plot(D(1,1:1000))
+hold on
+E=mean(Results.Feasible);
+plot(D(1,1:1000))
+title('Number of Feasible Solutions')
+ylim([0 50])
+nexttile
+surf(Results.AllBestFitnesses)
+
+E=mean(Results.AllBestFitnesses, 'all')
+NFE=Results.NFEAll;% Number of function evluations accouting for all population size, iterations and runs
+NFE_Perc=NFE/(Out.Npopulation*Out.MaxIter*Out.NRun)*100;
+PenaltyCount=Results.PenaltyCount;
+PenaltyCount_Perc=PenaltyCount/NFE*100;
+Average=mean(Results.AllBestFitnesses(:,end));
+Worst=max(Results.AllBestFitnesses(:,end));
+Best=min(Results.AllBestFitnesses(:,end));
+StdDeviation=std(Results.AllBestFitnesses(:,end));
 
 toc
