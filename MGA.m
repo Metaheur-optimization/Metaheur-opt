@@ -1,16 +1,8 @@
-
-function [BestCo,BestSolution]=MGA(out)
+%% GA first modified by KM 31 Dec 2020
+function [BestCo,BestSolution]=GA(out)
 
 global CostFunction VarSize VarMin VarMax MaxIt nPop NFE AlgorithmTermination FunctionNumber
 
-%% GA Parameters
-
-% nPop=20;            % Population Size
-% nVar=1;        % Number of Decision Variables
-% MaxIt=1000;          % Maximum Number of Iterations
-% 
-% VarMin=-10;
-% VarMax=10;
 
 
 VarSize=[1 out.nVar];   % Size of Decision Variables Matrix

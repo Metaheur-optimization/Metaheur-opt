@@ -1,24 +1,53 @@
+
 % %The main file to set the algorithms and run for CSA, PSO, and GA
-format long; close all; clear all; clc
+tic
+format long; close all; clc; clear; 
 
-AlgorithmType='MGA';
+Algorithm='GA'; 
 
-out = get_config(AlgorithmType);
+Out = get_config(Algorithm);
 
-switch AlgorithmType
+switch Algorithm
     %%Crow Search Algorithm
     case 'CSA'
-        [Global fit_mem g_best]=CSA(Npop,Nvar,Func,Nrun,itermax,LB,UB,AP,fl);
+        [AllBestFitnesses,AllBestSolution]=CSA(Out);
         
     case 'PSO'
-        [BestCost BestSolution]=PSO(Npop,Nvar,Func,Nrun,itermax,LB,UB,w,wdamp,c1,c2);
+        [AllBestFitnesses,AllBestSolution]=PSO(Out);
+        
+           case 'GA' 
        
-       case 'MGA' 
-       
-       [BestCo,BestSolution]=MGA(out)
-       
-       
-       
+       [AllBestFitnesses,AllBestSolution]=GA(Out)
+        
+        
 end
+
+disp(['No of Runs=',num2str(Out.NRun),' No of Iteration=',num2str(Out.MaxIter),...
+    ' Population Size=',num2str(Out.Npopulation)])
+% for i=1:Out.NRun
+%     plot(AllBestFitnesses(i,1:50))
+%     xlabel('No of Iteration')
+%     ylabel('Fitness value')
+%     hold on
+% end
+B=mean(AllBestFitnesses);
+% % plot(B(1,1:1000))
+% % C=mean(AllBestFitnesses, 'all')
+% % Average=mean(AllBestFitnesses(:,end));
+% % Worst=max(AllBestFitnesses(:,end));
+% % Best=min(AllBestFitnesses(:,end));
+% % StdDeviation=std(AllBestFitnesses(:,end));
+
+toc
+
+
+
+
+
+
+
+
+
+
 
 
