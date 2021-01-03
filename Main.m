@@ -13,9 +13,16 @@ switch Algorithm
         [AllBestFitnesses,AllBestSolution]=CSA(Out);
         
     case 'PSO'
+
         [AllBestFitnesses,AllBestSolution]=PSO(Out);
         
            case 'GA' 
+
+        [BestCost BestSolution]=PSO(Npop,Nvar,Func,Nrun,itermax,LB,UB,w,wdamp,c1,c2);
+       
+       case 'MGA' 
+       
+       [BestCo,BestSolution]=MGA(out)  
        
        [ResultsPool]=GA(Out)
         
