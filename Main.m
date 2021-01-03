@@ -17,7 +17,7 @@ switch Algorithm
         
            case 'GA' 
        
-       [AllBestFitnesses,AllBestSolution]=GA(Out)
+       [ResultsPool]=GA(Out)
         
         
 end

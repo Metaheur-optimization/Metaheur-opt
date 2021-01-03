@@ -1,5 +1,5 @@
 %% GA first modified by KM 31 Dec 2020
-function [AllBestFitnesses,AllBestSolution]=GA(Out)
+function [ResultsPool]=GA(Out)
 %% Setting and definition of variables
 
 AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
@@ -130,8 +130,8 @@ for iIter=1:Out.MaxIter
 end
 
    %% Saving results of the solution
-    AllBestSolution(:,iRun)=[ResultsPool.BestFitness]; % Solutin of the problem
-    AllBestFitnesses(:,iRun)=ResultsPool.BestDecisionVariable;
+%     AllBestSolution(:,iRun)=[ResultsPool.BestFitness]; % Solutin of the problem
+%     AllBestFitnesses(:,iRun)=ResultsPool.BestDecisionVariable;
 
 end
 
