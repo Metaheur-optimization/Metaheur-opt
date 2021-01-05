@@ -1,4 +1,4 @@
-function [ft,PenaltyBool]=EngineeringFitness(X,i,EngFunction) % Function for EngineeringFunctions evaluation
+function ft=EngineeringFitness(X,i,EngFunction) % Function for EngineeringFunctions evaluation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%Engineering problems fitness functions and variables%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -83,7 +83,6 @@ switch EngFunction
                 penalty(j)=0;
             else
                 penalty(j)=5*(1+g(j));
-                PenaltyBool=1;
             end
         end
         
@@ -114,8 +113,7 @@ switch EngFunction
             if g(j)<=0
                 penalty(j)=0;
             else
-                penalty(j)=0.2*10^2*(1+g(j));
-                PenaltyBool=1;
+                p(j)=0.2*10^2*(1+g(j));
             end
         end
         
@@ -139,25 +137,20 @@ switch EngFunction
                 penalty(j)=0;
             else
                 penalty(j)=penalty_constant*(1+g(j));
-                PenaltyBool=1;
             end
         end
         
         
         if mod(X(i,1),0.0625)==0
             penalty(5)=0;
-            PenaltyBool=1;
         else
             penalty(5)=penalty_constant2*mod(X(i,1),0.0625);
-            PenaltyBool=1;
         end
         
         if mod(X(i,2),0.0625)==0
             penalty(6)=0;
-            PenaltyBool=1;
         else
             penalty(6)=penalty_constant3*mod(X(i,2),0.0625);
-            PenaltyBool=1;
         end
         cost =0.6224*X(i,1)*X(i,3)*X(i,4)+1.7781*X(i,2)*X(i,3)^2 +3.1661*X(i,1)^2 *X(i,4)+19.84*X(i,1)^2 *X(i,3);
         
