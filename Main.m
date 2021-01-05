@@ -18,14 +18,10 @@ switch Algorithm
         
            case 'GA' 
 
-        [BestCost BestSolution]=PSO(Npop,Nvar,Func,Nrun,itermax,LB,UB,w,wdamp,c1,c2);
-       
-       case 'MGA' 
-       
-       [BestCo,BestSolution]=MGA(out)  
-       
-       [ResultsPool]=GA(Out)
+               [ResultsPool]=GA(Out)
+               
         
+       
         
 end
 
