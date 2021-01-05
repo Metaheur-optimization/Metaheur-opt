@@ -24,8 +24,13 @@ switch upper(caseString)
         Out.DampRatio = 0.99;     % Inertia Weight Damping Ratio
         Out.c1 = 2;           % Personahl Learning Coefficient
         Out.c2 = 2;           % Global Learning Coefficient
+%     case 'GA'
+%         Out.crossoverType = 'two-points';   % type of crossover, --> single_point, two_points,
+%         Out.crossoverProb = 0.9;  % probability of crossover
+%         Out.mutationProb = 0.05;   % probability of Mutation
     case 'GA'
-        Out.crossoverType = 'two-points';   % type of crossover, --> single_point, two_points,
-        Out.crossoverProb = 0.9;  % probability of crossover
-        Out.mutationProb = 0.05;   % probability of Mutation
+        Out.pc=0.8;                 % Crossover Percentage
+        Out.pm=0.3;                 % Mutation Percentage
+        Out.mu=0.02;                % Mutation Rate
+        Out.ParrentSlectionType='Tournament';   % Slection Type: 'Roulette Wheel','Tournament','Random','Roulette Wheel'
 end
