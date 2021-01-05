@@ -2,7 +2,7 @@
 tic
 format long; close all; clc; clear; 
 
-Algorithm='CSA'; 
+Algorithm='GA'; 
 
 Out = get_config(Algorithm);
 
@@ -15,11 +15,9 @@ switch Algorithm
         [Results]=PSO(Out);
         
     case 'GA'
+        [Results]=GA(Out);
 %         [BestCost,BestSolution]=PSO(Npop,Nvar,Func,Nrun,itermax,LB,UB,w,wdamp,c1,c2);	        [BestCost BestSolution]=PSO(Npop,Nvar,Func,Nrun,itermax,LB,UB,w,wdamp,c1,c2);
         
-    case 'MGA'
-%         [BestCo,BestSolution]=MGA(out)	       [BestCo,BestSolution]=MGA(out)
-%         [ResultsPool]=GA(Out)
 end
 
 disp(['No of Runs=',num2str(Out.NRun),' No of Iteration=',num2str(Out.MaxIter),...
