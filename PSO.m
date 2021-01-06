@@ -6,10 +6,13 @@ rng('default')
 
 Results.AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
 Results.AllBestSolution=zeros(Out.NRun,Out.NDecisionVariable);
-Results.NFE=0;
-NFE=0;
+Results.Feasible=zeros(Out.NRun,Out.MaxIter);
+Results.NFE=zeros(Out.NRun,Out.MaxIter);
+Results.NFEAll=0;
+NFEAll=0;
+
 Results.PenaltyCount=0;
-PenaltyCount=0;
+PenaltyCountAll=0;
 Npopulation=Out.Npopulation; % Flock (population) size
 NDecisionVariable=Out.NDecisionVariable; % Problem dimension (number of decision variables)
 % LowerBound=Out.LowerBound;
@@ -39,21 +42,22 @@ for iRun=1:Out.NRun
     for i=1:Npopulation
     %     Fitness =fitness(Position,Out); % Fitness evaluation
         [Best.Fitness(i), BoolPenalty]=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
-        NFE=NFE+1;
+        NFEAll=NFEAll+1;
         if BoolPenalty==1
-            PenaltyCount=PenaltyCount+1;
+            PenaltyCountAll=PenaltyCountAll+1;
         end
     end
     Best.Position=Position;
     [GlobalBest.Fitness, LocationMin]=min(Best.Fitness);
     GlobalBest.Position(:)=Best.Position(LocationMin(1),:);
-    
+    Results.NFE(iRun,1)=NFEAll;
+    Results.Feasible(iRun,1)=Npopulation-PenaltyCountAll;
+
     %% PSO Main Loop
     Bestfit=zeros(Out.MaxIter,1);
-    for it=1:Out.MaxIter
-        
+    for iIter=1:Out.MaxIter
+        NFE=0;PenaltyCount=0;
         for i=1:Npopulation
-            
             % Update Velocity
             Velocity(i,:)= InterWeight*Velocity(i,:)+...
                 c1*rand*(Best.Position(i,:)-Position(i,:))+...
@@ -84,10 +88,11 @@ for iRun=1:Out.NRun
                 %     Fitness =fitness(Position,Out); % Fitness evaluation
                 [Fitn,BoolPenalty]=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
                 if BoolPenalty==1
+                    PenaltyCountAll=PenaltyCountAll+1;
                     PenaltyCount=PenaltyCount+1;
                 end
+                NFEAll=NFEAll+1;
                 NFE=NFE+1;
-
                 % Update Personal Best
                 if Fitn<Best.Fitness(i)
                     Best.Position(i,:)=Position(i,:);
@@ -102,7 +107,9 @@ for iRun=1:Out.NRun
             end
         end
         
-        Bestfit(it)=GlobalBest.Fitness;
+        Bestfit(iIter)=GlobalBest.Fitness;
+        Results.NFE(iRun,iIter)=NFE;
+        Results.Feasible(iRun,iIter)=NFE-PenaltyCount;
         InterWeight=InterWeight*DampRatio;
         %         disp(['Iteration ' num2str(it) ' Best Fitness = ' num2str(Bestfit(it))]);
         
@@ -112,5 +119,5 @@ for iRun=1:Out.NRun
     Results.AllBestSolution(iRun,:)=GlobalBest.Position;
     Results.AllBestFitnesses(iRun,:)=Bestfit;
 end
-Results.NFE=NFE;
-Results.PenaltyCount=PenaltyCount;
+Results.NFEAll=NFEAll;
+Results.PenaltyCount=PenaltyCountAll;

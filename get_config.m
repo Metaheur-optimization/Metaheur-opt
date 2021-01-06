@@ -7,7 +7,7 @@ Out.NDecisionVariable = 3;  %Number of decision variables
 Out.Function = 12;  %Number of Mathematical function according to fitness file
 Out.EngFunction = 2;  %Number of Engineering function according to Engineering Function file
 Out.NRun = 50; %Number of runs
-Out.MaxIter = 1000;  %Maximum number of iterations
+Out.MaxIter = 200;  %Maximum number of iterations
 Out.LowerBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
 Out.UpperBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
 Out.LowerBound(:) = 0; %Lower bound of variables
@@ -31,6 +31,7 @@ switch upper(caseString)
     case 'GA'
         Out.pc=0.8;                 % Crossover Percentage
         Out.pm=0.3;                 % Mutation Percentage
-        Out.mu=0.02;                % Mutation Rate
+        Out.mu=0.3;                % Mutation Rate
+        Out.gamma=0.05;
         Out.ParrentSlectionType='Tournament';   % Slection Type: 'Roulette Wheel','Tournament','Random','Roulette Wheel'
 end

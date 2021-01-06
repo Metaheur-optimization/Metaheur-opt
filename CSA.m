@@ -9,6 +9,7 @@ Results.Feasible=zeros(Out.NRun,Out.MaxIter);
 Results.NFE=zeros(Out.NRun,Out.MaxIter);
 Results.NFEAll=0;
 NFEAll=0;
+
 Results.PenaltyCount=0;
 PenaltyCountAll=0;
 Npopulation=Out.Npopulation; % Flock (population) size
@@ -53,7 +54,7 @@ for iRun=1:Out.NRun
             
             Bool=1;
             for j=1:NDecisionVariable % Update position and memory
-                if Xnew(i,j)<=LowerBound(j) || Xnew(i,j)>=UpperBound(j)
+                if Xnew(i,j)<LowerBound(j) || Xnew(i,j)>UpperBound(j)
                     Bool=0;
                     break
                 end
@@ -75,7 +76,6 @@ for iRun=1:Out.NRun
             end
         end
         Bestfit(iIter)=min(fitnessMemory); % Best fitness found at iteration t
-        %         disp(['run =   ',num2str(iRun),'  iter =   ',num2str(iIter),' BEST Fitness= ',num2str(Bestfitness(iIter))])
         Results.NFE(iRun,iIter)=NFE;
         Results.Feasible(iRun,iIter)=NFE-PenaltyCount;
     end
