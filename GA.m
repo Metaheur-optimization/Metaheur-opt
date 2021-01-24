@@ -1,7 +1,7 @@
 %% GA first modified by KM 31 Dec 2020
 function [Results]=GA(Out)
 %% Setting and definition of variables
-% rng('default')
+ rng('default')
 
 Results.AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
 Results.AllBestSolution=zeros(Out.NRun,Out.NDecisionVariable);

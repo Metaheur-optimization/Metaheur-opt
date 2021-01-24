@@ -2,7 +2,7 @@
 function [Results]=CSA(Out)
 %% Setting and definition of variables
 rng('default')
-% rng(2)
+ %rng(20)
 Results.AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
 Results.AllBestSolution=zeros(Out.NRun,Out.NDecisionVariable);
 Results.Feasible=zeros(Out.NRun,Out.MaxIter);
@@ -42,11 +42,27 @@ for iRun=1:Out.NRun
     Xnew=zeros(Npopulation,NDecisionVariable);
     for iIter=1:Out.MaxIter % Maximum number of iterations (itermax)
         NFE=0;PenaltyCount=0;
-        num=ceil(Npopulation*rand(1,Npopulation)); % Generation of random candidate crows for following (chasing)
+        rr=rand(1,Npopulation);
+        num=ceil(Npopulation*rr); % Generation of random candidate crows for following (chasing)
+        Mea=mean(PositionMemory(:,:));
         for i=1:Npopulation
-            if rand>AP
+            r=rand;
+            if r>AP
                 for j=1:NDecisionVariable
                     Xnew(i,j)= Position(i,j)+fl*rand*(PositionMemory(num(i),j)-Position(i,j)); % Generation of a new position for crow i (state 1)
+                 
+                   % Xnew(i,j)= Position(i,j)+fl*rand*(mean(PositionMemory(:,j)-Position(i,j))); % Generation of a new position for crow i (state 1)
+                
+                 %Xnew(i,j)= Position(i,j)+((PositionMemory(num(i),j)-Position(i,j))/2); % Generation of a new position for crow i (state 1)
+                 
+                %Xnew(i,j)= Position(i,j)+fl*rand*(Mea(1,j)-Position(i,j)); % Generation of a new position for crow i (state 1)
+                 
+                 
+                 
+                 
+            
+                 
+                 
                 end
             else
                 Xnew(i,:)=LowerBound(:,1)+(UpperBound(:,1)-LowerBound(:,1))*rand; % Generation of a new position for crow i (state 2)

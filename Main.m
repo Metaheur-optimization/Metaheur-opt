@@ -30,21 +30,27 @@ disp(['No of Runs=',num2str(Out.NRun),' No of Iteration=',num2str(Out.MaxIter),.
 %     hold on
 % end
 
-
+figure(1)
 B=mean(Results.AllBestFitnesses);
-tiledlayout(3,1)
+subplot(3,1,1)
 
-nexttile
+%nexttile
 plot(B(1,1:numel(B)))
 title(['Average Fitness value for Engineering Function number ', num2str(Out.EngFunction)])
 
-nexttile
+
+subplot(3,1,2)
+
+
+%nexttile
 C=mean(Results.NFE);
 plot(C(1,1:numel(B)))
 title('Number of Function Evaluations')
 % ylim([0 50])
 
-nexttile
+subplot(3,1,3)
+
+%nexttile
 D=mean(Results.Feasible);
 plot(D(1,1:numel(B)))
 hold on
@@ -56,7 +62,13 @@ ylim([0 50])
 xlabel('Iteration number')
 hold off
 
-
+figure(2)
+plot3(Results.AllBestSolution(:,1),Results.AllBestSolution(:,2),Results.AllBestSolution(:,3),'bo', 'MarkerSize',10)
+xlabel('X1')
+ylabel('X2')
+zlabel('X3')
+title ('Best Solution Decion Variables')
+grid on
 % surf(Results.Feasible)
 
 EE=mean(Results.AllBestFitnesses, 'all')
