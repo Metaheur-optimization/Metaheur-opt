@@ -1,7 +1,7 @@
 % %The main file to set the algorithms and run for CSA, PSO, and GA
 tic
 format long; close all; clc; clear; 
-addpath('plots');
+
 Algorithm='CSA'; 
 
 Out = get_config(Algorithm);
@@ -31,10 +31,15 @@ disp(['No of Runs=',num2str(Out.NRun),' No of Iteration=',num2str(Out.MaxIter),.
 % end
 
 figure(1)
-plotFeasible(Results, Out)
+plot.plotFeasible(Results)
 
 figure(2)
-plot3Dbest(Results)
+plot3(Results.AllBestSolution(:,1),Results.AllBestSolution(:,2),Results.AllBestSolution(:,3),'bo', 'MarkerSize',10)
+xlabel('X1')
+ylabel('X2')
+zlabel('X3')
+title ('Best Solution Decion Variables')
+grid on
 % surf(Results.Feasible)
 
 EE=mean(Results.AllBestFitnesses, 'all')
