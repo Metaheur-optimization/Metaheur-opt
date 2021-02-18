@@ -97,9 +97,9 @@ besteverSolution=min(BestSolution(:,1));
  Results.BossLionPosition=BossLionPosition;
  Results.SupportLionPosition=SupportLionPosition;
  Results.AllNewPositionMemory=AllNewPositionMemory;
- Results.Mea=Mea;
- Results.St=St;
- Results.besteverSolution=besteverSolution;
+ Results.Mea=Mea
+ Results.St=St
+ Results.besteverSolution=besteverSolution
  Results.BestSolution=BestSolution;
  
  
