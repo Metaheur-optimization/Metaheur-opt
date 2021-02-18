@@ -2,14 +2,13 @@
 function [Results]=CSA(Out)
 %% Setting and definition of variables
 rng('default')
-%rng(20)
+ %rng(20)
 Results.AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
 Results.AllBestSolution=zeros(Out.NRun,Out.NDecisionVariable);
 Results.Feasible=zeros(Out.NRun,Out.MaxIter);
 Results.NFE=zeros(Out.NRun,Out.MaxIter);
 Results.NFEAll=0;
 NFEAll=0;
-Hybrid=0;% 1=HCSA active and 0=HCSA inactive
 
 Results.PenaltyCount=0;
 PenaltyCountAll=0;
@@ -26,7 +25,7 @@ fl=Out.fl;
 for iRun=1:Out.NRun
     %% initialization
     Position=init(Out); % Initialization of solutions
-    %     Position(1,:)=[0.0516890284000, 0.3567169544000, 11.2890117993000];
+%     Position(1,:)=[0.0516890284000, 0.3567169544000, 11.2890117993000];
     for i=1:Npopulation
         %     fitnessMemory=fitness(Position,i,Out); % Fitness evaluation
         [fitnessMemory(i), BoolPenalty]=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
@@ -45,37 +44,26 @@ for iRun=1:Out.NRun
         NFE=0;PenaltyCount=0;
         rr=rand(1,Npopulation);
         num=ceil(Npopulation*rr); % Generation of random candidate crows for following (chasing)
-        %         Mea=mean(PositionMemory(:,:));
-
-        if Hybrid==1
-            BestGlobalMemory=find(fitnessMemory== min(fitnessMemory));  %HCSA   %The best Global memory during all iterations
-            [~,ds]=sort(fitnessMemory,'descend');     %HCSA                    %Sorting Memories accordig to their fitness
-            final_per=2; %HCSA
-            kbest=final_per+(1-iIter/Out.MaxIter)*(100-final_per);         %%HCSA Percentage of the best crows at the last iteration
-            kbest=round(Npopulation*kbest/100); %HCSA
-        end
+        Mea=mean(PositionMemory(:,:));
         for i=1:Npopulation
             r=rand;
             if r>AP
+                for j=1:NDecisionVariable
+                    Xnew(i,j)= Position(i,j)+fl*(PositionMemory(num(i),j)-Position(i,j)); % Generation of a new position for crow i (state 1)
+                 
+                   % Xnew(i,j)= Position(i,j)+fl*rand*(mean(PositionMemory(:,j)-Position(i,j))); % Generation of a new position for crow i (state 1)
                 
-                if Hybrid==1
-                    dif=zeros(kbest,NDecisionVariable);%HCSA
-                    for j=1:kbest %HCSA
-                        k=ds(j);%HCSA
-                        if i~=k %HCSA
-                            dif(j,:)=fl*rand*(PositionMemory(k,:)-Position(i,:)); %HCSA
-                        end %HCSA
-                    end %HCSA
-                    difference=sum(dif)/kbest; %HCSA
-                    XXnew(i,:)= Position(i,:)+difference;       %HCSA   %New positions at the first stage of mutation
-                    Xnew(i,:)=XXnew(i,:)+fl*rand*(PositionMemory(BestGlobalMemory(1),:)-XXnew(i,:)); %New position at the second and final stage of mutation
-                else
-                    Xnew(i,:)= Position(i,:)+fl*rand*(PositionMemory(num(i),:)-Position(i,:)); %Original CSA % Generation of a new position for crow i (state 1)
-                end
-                
-                % Xnew(i,j)= Position(i,j)+fl*rand*(mean(PositionMemory(:,j)-Position(i,j))); % Generation of a new position for crow i (state 1)
-                %Xnew(i,j)= Position(i,j)+((PositionMemory(num(i),j)-Position(i,j))/2); % Generation of a new position for crow i (state 1)
+                % Xnew(i,j)= Position(i,j)+((PositionMemory(num(i),j)-Position(i,j))/2); % Generation of a new position for crow i (state 1)
+                 
                 %Xnew(i,j)= Position(i,j)+fl*rand*(Mea(1,j)-Position(i,j)); % Generation of a new position for crow i (state 1)
+                 
+                 
+                 
+                 
+            
+                 
+                 
+                end
             else
                 Xnew(i,:)=LowerBound(:,1)+(UpperBound(:,1)-LowerBound(:,1))*rand; % Generation of a new position for crow i (state 2)
             end

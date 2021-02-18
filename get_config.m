@@ -2,16 +2,20 @@ function Out = get_config(caseString)
 
 Out = [];
 %%Common parameters setting
-Out.Npopulation = 50;  %Population size
-Out.NDecisionVariable = 3;  %Number of decision variables
-Out.Function = 12;  %Number of Mathematical function according to fitness file
-Out.EngFunction = 2;  %Number of Engineering function according to Engineering Function file
-Out.NRun = 50; %Number of runs
-Out.MaxIter = 200;  %Maximum number of iterations
+Out.Npopulation = 100;  %Population size
+Out.NDecisionVariable =10;  %Number of decision variables
+Out.Function = 1;  %Number of Mathematical function according to fitness file
+Out.EngFunction = 1;  %Number of Engineering function according to Engineering Function file
+Out.NRun = 10; %Number of runs
+Out.MaxIter = 1000;  %Maximum number of iterations
 Out.LowerBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
 Out.UpperBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
-Out.LowerBound(:) = 0; %Lower bound of variables
-Out.UpperBound(:) = pi;  %Upper bound of variables
+Out.LowerBound(:) = -32; %Lower bound of variables
+Out.UpperBound(:) = 32;  %Upper bound of variables
+
+% Optimization
+
+Out.ObjectiveType=0  %(0 Minimization, 1 Maximization) 
 
 switch upper(caseString)
     case 'CSA'
@@ -34,4 +38,23 @@ switch upper(caseString)
         Out.mu=0.3;                % Mutation Rate
         Out.gamma=0.05;
         Out.ParrentSlectionType='Tournament';   % Slection Type: 'Roulette Wheel','Tournament','Random','Roulette Wheel'
+        
+        
+    case 'LAL'
+  % good for both f3 and f5   
+%      Out.Hunt_Boss=2;   
+%       Out.hunt_support=-0.01;  
+
+
+%  good for F2
+%       Out.Hunt_Boss=5;   
+%       Out.hunt_support=0.001;  
+
+       Out.Hunt_Boss=2;   
+      Out.hunt_support=-0.01;  
+      
+
+
+
+
 end
