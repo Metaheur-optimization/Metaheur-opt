@@ -2,7 +2,7 @@
 function [Results]=LAL(Out)
 
 rng('default');
-
+rng(20);
 Npopulation=Out.Npopulation; % Flock (population) size
 NDecisionVariable=Out.NDecisionVariable; % Problem dimension (number of decision variables)
 fitnessMemory=zeros(1,Npopulation);
@@ -23,6 +23,8 @@ UB=Out.UpperBound(1);
 
 
 for iRun=1:Out.NRun
+    %rng(iRun);
+    
     %% initialization
     Position=init(Out); % Initialization of solutions
     AllPositionMemory=Position; % Memorise Position of solutions

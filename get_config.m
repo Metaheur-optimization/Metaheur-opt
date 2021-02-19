@@ -41,22 +41,19 @@ switch upper(caseString)
         
         
     case 'LAL'
-  % good for both f3 and f5   
+  % good for both F1, f3 and f5   
 %      Out.Hunt_Boss=2;   
 %       Out.hunt_support=-0.01;  
 
 
 % good for F2
 %       Out.Hunt_Boss=5;   
-%       Out.hunt_support=0.001;  
-
-%        Out.Hunt_Boss=2;   
-%       Out.hunt_support=-0.01;  
-%       
+%       Out.hunt_support=0.001;        
 
 % good for F2
 %       Out.Hunt_Boss=2;   
 %       Out.hunt_support=-0.001;  
+% rng (20)
 
       Out.Hunt_Boss=2;   
       Out.hunt_support=-0.001;  
