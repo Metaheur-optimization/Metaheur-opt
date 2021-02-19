@@ -10,7 +10,7 @@ Out.NRun = 1; %Number of runs
 Out.MaxIter = 1000;  %Maximum number of iterations
 Out.LowerBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
 Out.UpperBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
-Out.LowerBound(:) = -30; %Lower bound of variables
+Out.LowerBound(:) = -50; %Lower bound of variables
 Out.UpperBound(:) = 30;  %Upper bound of variables
 
 % Optimization

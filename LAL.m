@@ -51,7 +51,7 @@ for iRun=1:Out.NRun
                 for j=1:NDecisionVariable
                     NewBossLionPositionMemory(i,j)=BossLionPositionMemory(i,j)+rand*Hunt_Boss*(BossLionPositionMemory(RandomBossLionIndex(i),j)-BossLionPositionMemory(i,j));
                     
-                   %NewBossLionPositionMemory(i,j)=BossLionPositionMemory(i,j)+rand*Hunt_Boss*((BossLionPositionMemory(RandomBossLionIndex(i),j)-BossLionPositionMemory(i,j))/2);    
+                  % NewBossLionPositionMemory(i,j)=BossLionPositionMemory(i,j)+rand*Hunt_Boss*((BossLionPositionMemory(RandomBossLionIndex(i),j)-BossLionPositionMemory(i,j))/2);    
                   
                 end
             end

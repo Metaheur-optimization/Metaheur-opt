@@ -112,11 +112,21 @@ switch Out.Function
         ft=1-cos(2*pi*sqrt(sum(xi(i,:))))+ 0.1*sqrt(sum(xi(i,:)));
         %% 19. Rosenbrock problem
     case 19
-        s=zeros(1,NDecisionVariable-1);
+        %s=zeros(1,NDecisionVariable-1);
+        s=0;
         for j=1:NDecisionVariable-1
-            s(1,j)=100*((X(i,j+1)-X(i,j)^2)^2)+(X(i,j)-1)^2;
+            T1=(X(i,j))^2;
+            T2=X(i,j+1);
+            T3=((T1-T2)^2)*100;
+            T4=(X(i,j)-1)^2;
+            
+            T5=(T3+T4);
+            s=s+T5;
+           %s(1,j)=100*((X(i,j+1)-X(i,j)^2)^2)+(X(i,j)-1)^2;
+            
+            
         end
-        ft=sum(s(1,:)); % Sphere function
+        ft=s;   %sum(s(1,:)); % Sphere function
         %% 20. Box-Betts' Exponential Quadratic Sum Function:
     case 20
         g=zeros(1,10);

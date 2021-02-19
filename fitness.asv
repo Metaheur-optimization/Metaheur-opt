@@ -114,6 +114,8 @@ switch Out.Function
     case 19
         s=zeros(1,NDecisionVariable-1);
         for j=1:NDecisionVariable-1
+            T1=X(i,j))^2
+            
             s(1,j)=100*((X(i,j+1)-X(i,j)^2)^2)+(X(i,j)-1)^2;
         end
         ft=sum(s(1,:)); % Sphere function
@@ -203,10 +205,12 @@ switch Out.Function
         ft=T1-T2+1;
         
     case 29
+        s=0;
+        for kkk=1:NDecisionVariable
+        s=s+((X(i,kkk))^2);
+        end
         
-        fo
-        
-        
+        ft=s;
         
 end
 
