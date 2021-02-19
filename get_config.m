@@ -4,14 +4,14 @@ Out = [];
 %%Common parameters setting
 Out.Npopulation = 100;  %Population size
 Out.NDecisionVariable =10;  %Number of decision variables
-Out.Function = 28;  %Number of Mathematical function according to fitness file
+Out.Function = 29;  %Number of Mathematical function according to fitness file
 Out.EngFunction = 1;  %Number of Engineering function according to Engineering Function file
-Out.NRun = 10; %Number of runs
+Out.NRun = 1; %Number of runs
 Out.MaxIter = 1000;  %Maximum number of iterations
 Out.LowerBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
 Out.UpperBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
-Out.LowerBound(:) = -600; %Lower bound of variables
-Out.UpperBound(:) = 600;  %Upper bound of variables
+Out.LowerBound(:) = -100; %Lower bound of variables
+Out.UpperBound(:) = 100;  %Upper bound of variables
 
 % Optimization
 

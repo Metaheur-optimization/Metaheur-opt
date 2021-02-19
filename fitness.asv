@@ -203,12 +203,10 @@ switch Out.Function
         ft=T1-T2+1;
         
     case 29
-        s=0;
-        for kkk=1:NDecisionVariable
-        s=s+((X(i,kkk))^2);
-        end
         
-        ft=s;
+        fo
+        
+        
         
 end
 
