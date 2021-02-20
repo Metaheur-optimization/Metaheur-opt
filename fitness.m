@@ -6,9 +6,24 @@ NDecisionVariable=Out.NDecisionVariable;
 switch Out.Function
     %% 1. Ackley's problem
     case 1
-        ft = -20*exp(-0.2*sqrt(1/NDecisionVariable*(sum(X(i,:)))))-exp(1/NDecisionVariable*(sum(cos(2*pi*X(i,:)))))+20+exp(1);
+         s=0;
+        s1=0;
+       for iii=1:NDecisionVariable
+        s=s+(X(i,iii))^2;
+        s1=s1+cos((X(i,iii)*2*pi));
+       end
+%         X(i,3)=(X(i,1))^2;
+%        X(i,4)=(X(i,2))^2;
+%        T1=exp(-0.2*sqrt(1/NDecisionVariable*(sum(X(i,3:4)))));
+%        T2=exp(1/NDecisionVariable*(sum(cos(2*pi*X(i,1:2)))));
+%        
+       T1=exp(-0.2*sqrt(1/NDecisionVariable*(s)));
+       T2=exp(1/NDecisionVariable*(s1));
+       
+       
+        ft = -20*T1-T2+20+exp(1);
         %% 2. Aluffi-Pentini's problem
-    case 2
+    case 6
         ft= 0.25*X(i,1)^4 - 0.5*X(i,1)^2 + 0.1*X(i,1) + 0.5*X(i,2)^2;
         %% 3. Becker and Lago problem
     case 3
@@ -97,11 +112,21 @@ switch Out.Function
         ft=1-cos(2*pi*sqrt(sum(xi(i,:))))+ 0.1*sqrt(sum(xi(i,:)));
         %% 19. Rosenbrock problem
     case 19
-        s=zeros(1,NDecisionVariable-1);
+        %s=zeros(1,NDecisionVariable-1);
+        s=0;
         for j=1:NDecisionVariable-1
-            s(1,j)=100*((X(i,j+1)-X(i,j)^2)^2)+(X(i,j)-1)^2;
+            T1=(X(i,j))^2;
+            T2=X(i,j+1);
+            T3=((T1-T2)^2)*100;
+            T4=(X(i,j)-1)^2;
+            
+            T5=(T3+T4);
+            s=s+T5;
+           %s(1,j)=100*((X(i,j+1)-X(i,j)^2)^2)+(X(i,j)-1)^2;
+            
+            
         end
-        ft=sum(s(1,:)); % Sphere function
+        ft=s;   %sum(s(1,:)); % Sphere function
         %% 20. Box-Betts' Exponential Quadratic Sum Function:
     case 20
         g=zeros(1,10);
@@ -169,6 +194,32 @@ switch Out.Function
             s(j)=-X(i,j)*sin(sqrt(abs(X(i,j)-X(i,j+1)-47)))-(X(i,j+1)+47)*sin(sqrt(abs(0.5*X(i,j)+X(i,j+1)+47)));
         end
         ft = sum(s);% Sphere function
+        
+        
+        %% Griewank function
+         case 28
+         
+          Prod=1;
+          for iii=1:NDecisionVariable
+          s(iii)=((X(i,iii))^2)/4000;
+          s1(iii)=cos((X(i,iii)/sqrt(iii)));
+          Prod=Prod*s1(iii);
+          end
+          
+          
+          
+          T1=sum(s);
+          T2=Prod;
+        ft=T1-T2+1;
+        
+    case 29
+        s=0;
+        for kkk=1:NDecisionVariable
+        s=s+((X(i,kkk))^2);
+        end
+        
+        ft=s;
+        
 end
 
 

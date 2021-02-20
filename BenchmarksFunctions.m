@@ -52,7 +52,7 @@ case 1
        
         T1=(sin((x(i,1)^2)-(x(i,2)^2))^2)-0.5;
         T2=(1+0.001*((x(i,1)^2)+(x(i,2)^2)))^2;
-        fitness=0.5 (T1/T2);
+        fitness=0.5 +(T1/T2);
        
   %% 5. schwefel Function
     case 5
