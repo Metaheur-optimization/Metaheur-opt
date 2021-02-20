@@ -2,7 +2,7 @@
 tic
 format long; close all; clc; clear; 
 addpath('plots')
-Algorithm='LAL'; 
+Algorithm='CSA'; 
 
 Out = get_config(Algorithm);
 
@@ -33,13 +33,13 @@ figure(2)
 plot3Dbest(Results)
 % 
 % EE=mean(Results.AllBestFitnesses, 'all')
-% NFE=Results.NFEAll;% Number of function evluations accouting for all population size, iterations and runs
-% NFE_Perc=NFE/(Out.Npopulation*Out.MaxIter*Out.NRun)*100;
-% PenaltyCount=Results.PenaltyCount;
-% PenaltyCount_Perc=PenaltyCount/NFE*100;
-% Average=mean(Results.AllBestFitnesses(:,end));
-% Worst=max(Results.AllBestFitnesses(:,end));
-% Best=min(Results.AllBestFitnesses(:,end));
-% StdDeviation=std(Results.AllBestFitnesses(:,end));
+NFE=Results.NFEAll;% Number of function evluations accouting for all population size, iterations and runs
+NFE_Perc=NFE/(Out.Npopulation*Out.MaxIter*Out.NRun)*100;
+PenaltyCount=Results.PenaltyCount;
+PenaltyCount_Perc=PenaltyCount/NFE*100;
+Average=mean(Results.AllBestFitnesses(:,end));
+Worst=max(Results.AllBestFitnesses(:,end));
+Best=min(Results.AllBestFitnesses(:,end));
+StdDeviation=std(Results.AllBestFitnesses(:,end));
 % 
 % 

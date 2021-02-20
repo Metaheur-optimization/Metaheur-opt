@@ -88,7 +88,7 @@ for iRun=1:Out.NRun
         
          % Assess Fittness Values
         [AllNewPositionMemory,BossLionPositionMemory,SupportLionPositionMemory]=ObjFucEval(AllPositionMemory,ObjectiveType,NoofBossLions);  %(ObjectiveType: 0 Minimization, 1 Maximization) 
-        NoFuncEval=NoFuncEval+1
+        NoFuncEval=NoFuncEval+1;
             
     BossLionPosition=BossLionPositionMemory;
     SupportLionPosition=SupportLionPositionMemory;
