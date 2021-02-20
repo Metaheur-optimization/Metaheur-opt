@@ -2,16 +2,16 @@ function Out = get_config(caseString)
 
 Out = [];
 %%Common parameters setting
-Out.Npopulation = 100;  %Population size
+Out.Npopulation = 100;  %Population size - CSA:20
 Out.NDecisionVariable =10;  %Number of decision variables
-Out.Function = 19;  %Number of Mathematical function according to fitness file
+Out.Function = 28;  %Number of Mathematical function according to fitness file
 Out.EngFunction = 1;  %Number of Engineering function according to Engineering Function file
-Out.NRun = 1; %Number of runs
-Out.MaxIter = 1000;  %Maximum number of iterations
+Out.NRun = 30; %Number of runs - CSA:30
+Out.MaxIter = 1000;  %Maximum number of iterations - CSA:2000 -->  20*30 * 2000 = 1200000, 
 Out.LowerBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
 Out.UpperBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
-Out.LowerBound(:) = -30; %Lower bound of variables
-Out.UpperBound(:) = 30;  %Upper bound of variables
+Out.LowerBound(:) = -600; %Lower bound of variables 
+Out.UpperBound(:) = 600;  %Upper bound of variables
 
 % Optimization
 
@@ -56,7 +56,7 @@ switch upper(caseString)
 % rng (20)
 
       Out.Hunt_Boss=2;   
-      Out.hunt_support=-0.001;  
+      Out.hunt_support=-0.02; 
 
 
 end

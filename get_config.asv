@@ -2,16 +2,16 @@ function Out = get_config(caseString)
 
 Out = [];
 %%Common parameters setting
-Out.Npopulation = 100;  %Population size
+Out.Npopulation = 20;  %Population size
 Out.NDecisionVariable =10;  %Number of decision variables
-Out.Function = 19;  %Number of Mathematical function according to fitness file
+Out.Function = 28;  %Number of Mathematical function according to fitness file
 Out.EngFunction = 1;  %Number of Engineering function according to Engineering Function file
-Out.NRun = 1; %Number of runs
-Out.MaxIter = 1000;  %Maximum number of iterations
+Out.NRun = 30; %Number of runs
+Out.MaxIter = 2000;  %Maximum number of iterations
 Out.LowerBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
 Out.UpperBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
-Out.LowerBound(:) = -50; %Lower bound of variables
-Out.UpperBound(:) = 30;  %Upper bound of variables
+Out.LowerBound(:) = -600; %Lower bound of variables 
+Out.UpperBound(:) = 600;  %Upper bound of variables
 
 % Optimization
 
@@ -41,25 +41,22 @@ switch upper(caseString)
         
         
     case 'LAL'
-  % good for both f3 and f5   
+  % good for both F1, f3 and f5   
 %      Out.Hunt_Boss=2;   
 %       Out.hunt_support=-0.01;  
 
 
 % good for F2
 %       Out.Hunt_Boss=5;   
-%       Out.hunt_support=0.001;  
-
-%        Out.Hunt_Boss=2;   
-%       Out.hunt_support=-0.01;  
-%       
+%       Out.hunt_support=0.001;        
 
 % good for F2
 %       Out.Hunt_Boss=2;   
 %       Out.hunt_support=-0.001;  
+% rng (20)
 
       Out.Hunt_Boss=2;   
-      Out.hunt_support=-0.001;  
+      Out.hunt_support=-0.01; 
 
 
 end
