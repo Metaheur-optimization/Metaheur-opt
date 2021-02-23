@@ -18,8 +18,16 @@ NoFuncEval=0; % Number of function Evalutions
 LB=Out.LowerBound(1);
 UB=Out.UpperBound(1);
 
-
-
+%%% indicators definintion %%%%%%
+Results.AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
+Results.AllBestSolution=zeros(Out.NRun,Out.NDecisionVariable);
+Results.Feasible=zeros(Out.NRun,Out.MaxIter);
+Results.NFE=zeros(Out.NRun,Out.MaxIter);
+Results.NFEAll=0;
+NFEAll=0;
+Results.PenaltyCount=0;
+PenaltyCountAll=0;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 for iRun=1:Out.NRun

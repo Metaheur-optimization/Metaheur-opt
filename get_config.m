@@ -1,27 +1,36 @@
 function Out = get_config(caseString)
 
 Out = [];
+
 %%Common parameters setting
 Out.Npopulation = 20;  %Population size - CSA:20
 Out.NDecisionVariable =10;  %Number of decision variables
 Out.Function = 29;  %Number of Mathematical function according to fitness file
-Out.EngFunction = 1;  %Number of Engineering function according to Engineering Function file
+%Out.EngFunction = 1;  %Number of Engineering function according to Engineering Function file
 Out.NRun = 30; %Number of runs - CSA:30
 Out.MaxIter = 2000;  %Maximum number of iterations - CSA:2000 -->  20*30 * 2000 = 1200000, 
+
+
+
+%%%%%%%%%% NO need to modify this part   %%%%%%%%%%%%%%%%%%%%%%%%%%%
+bounds = xlsread('FunctionsBounds'); %%% the lower and upper bounds of the functions
 Out.LowerBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
 Out.UpperBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
-Out.LowerBound(:) = -100; %Lower bound of variables 
-Out.UpperBound(:) = 100;  %Upper bound of variables
+Out.LowerBound(:) = bounds(Out.NDecisionVariable, 1); %Lower bound of variables 
+Out.UpperBound(:) = bounds(Out.NDecisionVariable, 1);  %Upper bound of variables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 
 % Optimization
 
-Out.ObjectiveType=0  %(0 Minimization, 1 Maximization) 
+Out.ObjectiveType=0 ; %(0 Minimization, 1 Maximization) 
 
 switch upper(caseString)
     case 'CSA'
         %%Parameters setting for the CSA
-        Out.AP = 0.02    %0.20; % Awareness probability
-        Out.fl = 2.0     %3.0; % Flight length (fl)
+        Out.AP = 0.02;    %0.20; % Awareness probability
+        Out.fl = 2.0;     %3.0; % Flight length (fl)
     case 'PSO'
         %%Parameters setting for the PSO
         Out.InterWeight = 1;            % Inertia Weight

@@ -33,18 +33,22 @@ for iRun=1:Out.NRun
     %% initialization
     Position=init(Out); % Initialization of solutions
 %     Position(1,:)=[0.0516890284000, 0.3567169544000, 11.2890117993000];
-    for i=1:Npopulation
-        if BoolFunction==0
-            fitnessMemory(i)=fitness(Position,i,Out); % Fitness evaluation
-            BoolPenalty=0;
-        else
-            [fitnessMemory(i), BoolPenalty]=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
-        end
-        NFEAll=NFEAll+1;
-        if BoolPenalty==1
-            PenaltyCountAll=PenaltyCountAll+1;
-        end
-    end
+    [fitnessMemory(1:Npopulation), BoolPenalty(1:Npopulation)] = fitness(Position, 1:Npopulation, Out);   % Fitness evaluation
+    PenaltyCountAll = sum(BoolPenalty);
+    NFEAll=NFEAll+1;     %????
+    
+%     for i=1:Npopulation
+%         if BoolFunction==0
+%             fitnessMemory(i)=fitness(Position,i,Out); % Fitness evaluation
+%             BoolPenalty=0;
+%         else
+%             [fitnessMemory(i), BoolPenalty]=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
+%         end
+%         NFEAll=NFEAll+1;
+%         if BoolPenalty==1
+%             PenaltyCountAll=PenaltyCountAll+1;
+%         end
+%     end
     PositionMemory=Position; % Memorise Position of solutions
     Results.NFE(iRun,1)=NFEAll;
     Results.Feasible(iRun,1)=Npopulation-PenaltyCountAll;
@@ -56,25 +60,29 @@ for iRun=1:Out.NRun
         rr=rand(1,Npopulation);
         num=ceil(Npopulation*rr); % Generation of random candidate crows for following (chasing)
         Mea=mean(PositionMemory(:,:));
+        
+        
+        
         for i=1:Npopulation
             r=rand;
             if r>AP
-                for j=1:NDecisionVariable
-                    Xnew(i,j)= Position(i,j)+fl*(PositionMemory(num(i),j)-Position(i,j)); % Generation of a new position for crow i (state 1)
-                 
-                   % Xnew(i,j)= Position(i,j)+fl*rand*(mean(PositionMemory(:,j)-Position(i,j))); % Generation of a new position for crow i (state 1)
-                
-                % Xnew(i,j)= Position(i,j)+((PositionMemory(num(i),j)-Position(i,j))/2); % Generation of a new position for crow i (state 1)
-                 
-                %Xnew(i,j)= Position(i,j)+fl*rand*(Mea(1,j)-Position(i,j)); % Generation of a new position for crow i (state 1)
-                 
-                 
-                 
-                 
-            
-                 
-                 
-                end
+%                 for j=1:NDecisionVariable
+%                     Xnew(i,j)= Position(i,j)+fl*(PositionMemory(num(i),j)-Position(i,j)); % Generation of a new position for crow i (state 1)
+%                  
+%                    % Xnew(i,j)= Position(i,j)+fl*rand*(mean(PositionMemory(:,j)-Position(i,j))); % Generation of a new position for crow i (state 1)
+%                 
+%                 % Xnew(i,j)= Position(i,j)+((PositionMemory(num(i),j)-Position(i,j))/2); % Generation of a new position for crow i (state 1)
+%                  
+%                 %Xnew(i,j)= Position(i,j)+fl*rand*(Mea(1,j)-Position(i,j)); % Generation of a new position for crow i (state 1)
+%                  
+%                  
+%                  
+%                  
+%             
+%                  
+%                  
+%                 end
+                Xnew(i,1:NDecisionVariable)= Position(i,1:NDecisionVariable)+fl*(PositionMemory(num(i),1:NDecisionVariable)-Position(i,1:NDecisionVariable)); % Generation of a new position for crow i (state 1)
             else
                 Xnew(i,:)=LowerBound(:,1)+(UpperBound(:,1)-LowerBound(:,1))*rand; % Generation of a new position for crow i (state 2)
             end
@@ -88,12 +96,13 @@ for iRun=1:Out.NRun
             end
             if(Bool==1)
                 Position(i,:)=Xnew(i,:); % Update position
-                if BoolFunction==0
-                    fitne=fitness(Position,i,Out); % Fitness evaluation
-                    BoolPenalty=0;
-                else
-                    [fitne,BoolPenalty]=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
-                end
+%                 if BoolFunction==0
+%                     fitne=fitness(Position,i,Out); % Fitness evaluation
+%                     BoolPenalty=0;
+%                 else
+%                     [fitne,BoolPenalty]=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
+%                 end
+                
                 if BoolPenalty==1
                     PenaltyCountAll=PenaltyCountAll+1;
                     PenaltyCount=PenaltyCount+1;
@@ -115,6 +124,8 @@ for iRun=1:Out.NRun
     [~,ngbest]=min(fitnessMemory);
     Results.AllBestSolution(iRun,:)=PositionMemory(ngbest(1),:); % Solutin of the problem
     Results.AllBestFitnesses(iRun,:)=Bestfit;
+% Results.NFEAll=NFEAll;
+% Results.PenaltyCount=PenaltyCountAll;
 end
 Results.NFEAll=NFEAll;
 Results.PenaltyCount=PenaltyCountAll;
