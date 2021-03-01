@@ -88,11 +88,12 @@ for iRun=1:Out.NRun
                 NFEAll=NFEAll+1;
                 NFE=NFE+1;
                 fitnessMemory(i)=fitne;
+                NewBossLionPositionMemory(i, NDecisionVariable+1) = fitne;
             end
         end
         
         
-        combineBossLions = [NewBossLionPositionMemory; BossLionPositionMemory(:, (1:(end-1)))];
+        combineBossLions = [NewBossLionPositionMemory; BossLionPositionMemory];
         [~ , NewBossLionPositionMemory, ~] = ObjFucEval(combineBossLions, ObjectiveType, NoofBossLions);
         
         
@@ -125,13 +126,19 @@ for iRun=1:Out.NRun
                 NFEAll=NFEAll+1;
                 NFE=NFE+1;
                 fitnessMemory(NoofBossLions + s)=fitne;
+                NewSupportLionPositionMemory(s, NDecisionVariable+1) = fitne;
             end
         end
+        
+        
+        % Assess Fittness Values
+        combineBossLions = [NewBossLionPositionMemory; NewSupportLionPositionMemory];
+        [~ , NewBossLionPositionMemory, ~] = ObjFucEval(combineBossLions, ObjectiveType, NoofBossLions);
 %     end
         
        
-         % Assess Fittness Values
-        [AllNewPositionMemory,BossLionPositionMemory,SupportLionPositionMemory]=ObjFucEval(PositionMemory,ObjectiveType,NoofBossLions);  %(ObjectiveType: 0 Minimization, 1 Maximization) 
+         
+        %[AllNewPositionMemory,BossLionPositionMemory,SupportLionPositionMemory]=ObjFucEval(PositionMemory,ObjectiveType,NoofBossLions);  %(ObjectiveType: 0 Minimization, 1 Maximization) 
         NoFuncEval=NoFuncEval+1;
             
         BossLionPosition=BossLionPositionMemory;

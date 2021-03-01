@@ -15,8 +15,8 @@ hunt_support=Out.hunt_support;
 
 NoFuncEval=0; % Number of function Evalutions
 
-LB=Out.LowerBound(1);
-UB=Out.UpperBound(1);
+LowerBound=Out.LowerBound;
+UpperBound=Out.UpperBound;
 
 %%% indicators definintion %%%%%%
 Results.AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
@@ -92,7 +92,7 @@ for iRun=1:Out.NRun
         end
         
         
-        combineBossLions = [NewBossLionPositionMemory; BossLionPositionMemory];
+        combineBossLions = [NewBossLionPositionMemory; BossLionPositionMemory(:, (1:(end-1)))];
         [~ , NewBossLionPositionMemory, ~] = ObjFucEval(combineBossLions, ObjectiveType, NoofBossLions);
         
         
@@ -110,41 +110,27 @@ for iRun=1:Out.NRun
 %             end
             Bool=1;
             for j=1:NDecisionVariable % Update position and memory
-                if NewSupportLionPositionMemory(i,j)<LowerBound(j) || NewSupportLionPositionMemory(i,j)>UpperBound(j)
+                if NewSupportLionPositionMemory(s,j)<LowerBound(j) || NewSupportLionPositionMemory(s,j)>UpperBound(j)
                     Bool=0;
                     break
                 end
             end
             if(Bool==1)
-                Position(i,:) = NewSupportLionPositionMemory(i, 1:NDecisionVariable);
-                [fitne, BoolPenalty] = fitness(Position,i,Out); % Fitness evaluation
+                Position(s,:) = NewSupportLionPositionMemory(s, 1:NDecisionVariable);
+                [fitne, BoolPenalty] = fitness(Position,s,Out); % Fitness evaluation
                 if BoolPenalty==1
                     PenaltyCountAll=PenaltyCountAll+1;
                     PenaltyCount=PenaltyCount+1;
                 end
                 NFEAll=NFEAll+1;
                 NFE=NFE+1;
-                fitnessMemory(NoofBossLions + i)=fitne;
+                fitnessMemory(NoofBossLions + s)=fitne;
+                NewSupportLionPositionMemory(s, NDecisionVariable+1) = fitne;
             end
         end
+        combineBossLions = [NewBossLionPositionMemory; BossLionPositionMemory(:, (1:(end-1)))];
+        [~ , NewBossLionPositionMemory, ~] = ObjFucEval(combineBossLions, ObjectiveType, NoofBossLions);
 %     end
-        % evalute objective function
-%         [row1, ~] = size(NewSupportLionPositionMemory);
-%         [fitnessMemory(row+1: row+row1), BoolPenalty(1:row1)] = fitness(NewSupportLionPositionMemory,(1:row1),Out); % Fitness evaluation
-%         NewSupportLionPositionMemory((1:row1),Out.NDecisionVariable+1)=fitnessMemory(row+1: row+row1);
-%         NFE = NFE + row1;
-%         NFEAll=NFEAll+row1;
-%         PenaltyCount = PenaltyCount + sum(BoolPenalty);
-%         PenaltyCountAll = PenaltyCountAll + sum(BoolPenalty);
-%         PositionMemory=[NewBossLionPositionMemory; NewSupportLionPositionMemory];
-         
-%         % evalute objective function
-%         PositionMemory=[NewBossLionPositionMemory(:,1:(end-1));NewSupportLionPositionMemory];
-%         [row, ~] = size(PositionMemory);
-%         for ii=1:row
-%             fitnessMemory=fitness(PositionMemory,ii,Out); % Fitness evaluation
-%             PositionMemory(ii,Out.NDecisionVariable+1)=fitnessMemory;
-%         end
         
        
          % Assess Fittness Values
