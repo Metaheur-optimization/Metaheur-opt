@@ -1,21 +1,25 @@
 function Out = get_config(caseString)
 
 Out = [];
-bounds = xlsread('bounds'); %%% the lower and upper bounds of the functions
+
 %%Common parameters setting
 Out.Npopulation = 20;  %Population size - CSA:20
-Out.NDecisionVariable =10;  %Number of decision variables
 Out.Function = 29;  %Number of Mathematical function according to fitness file
-Out.EngFunction = 1;  %Number of Engineering function according to Engineering Function file
-Out.NRun = 30; %Number of runs - CSA:30
-Out.MaxIter = 2000;  %Maximum number of iterations - CSA:2000 -->  20*30 * 2000 = 1200000, 
+Out.NRun = 5; %Number of runs - CSA:30
+Out.MaxIter = 1000;  %Maximum number of iterations - CSA:2000 -->  20*30 * 2000 = 1200000, 
+
+
 
 %%%%%%%%%% NO need to modify this part   %%%%%%%%%%%%%%%%%%%%%%%%%%%
-Out.LowerBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
-Out.UpperBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
-Out.LowerBound(:) = bounds(Out.NDecisionVariable, 1); %Lower bound of variables 
-Out.UpperBound(:) = bounds(Out.NDecisionVariable, 1);  %Upper bound of variables
+data_temp = xlsread('FunctionsBounds', 'NoDecisionvar');
+Out.NDecisionVariable = data_temp(Out.Function);  %Number of decision variables
+data_temp = xlsread('FunctionsBounds', 'lower');
+Out.LowerBound = data_temp(Out.Function, 1:Out.NDecisionVariable); %Lower bound of variables
+data_temp = xlsread('FunctionsBounds', 'upper');
+Out.UpperBound = data_temp(Out.Function, 1:Out.NDecisionVariable); %Upper bound of variables
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 
 % Optimization
 
@@ -24,7 +28,7 @@ Out.ObjectiveType=0 ; %(0 Minimization, 1 Maximization)
 switch upper(caseString)
     case 'CSA'
         %%Parameters setting for the CSA
-        Out.AP = 0.02;    %0.20; % Awareness probability
+        Out.AP = 0.5;    %0.20; % Awareness probability
         Out.fl = 2.0;     %3.0; % Flight length (fl)
     case 'PSO'
         %%Parameters setting for the PSO

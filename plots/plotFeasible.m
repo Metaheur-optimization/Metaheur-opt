@@ -5,7 +5,7 @@ subplot(3,1,1)
 
 %nexttile
 plot(B(1,1:numel(B)))
-title(['Average Fitness value for Engineering Function number ', num2str(Out.EngFunction)])
+title(['Average Fitness value for Engineering Function number ', num2str(Out.Function)])
 
 
 subplot(3,1,2)

@@ -3,7 +3,7 @@ tic
 format long; close all; clc; clear; 
 rng('default')
 addpath('plots')
-Algorithm='LAL'; 
+Algorithm='CSA'; 
 
 Out = get_config(Algorithm);
 
