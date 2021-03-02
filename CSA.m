@@ -24,7 +24,7 @@ for iRun=1:Out.NRun
     %% initialization
     Position=init(Out); % Initialization of solutions
 %     Position(1,:)=[0.0516890284000, 0.3567169544000, 11.2890117993000];
-    [fitnessMemory(1:Npopulation), BoolPenalty(1:Npopulation)] = fitness(Position, 1:Npopulation, Out);   % Fitness evaluation
+    [fitnessMemory(1:Npopulation), BoolPenalty(1:Npopulation)] = fitness(Position, (1:Npopulation), Out);   % Fitness evaluation
     PenaltyCountAll = sum(BoolPenalty);
     NFEAll=NFEAll+Npopulation;     %????
     PositionMemory=Position; % Memorise Position of solutions

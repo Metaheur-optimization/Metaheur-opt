@@ -218,13 +218,13 @@ switch Out.Function
         
         %% Sphere function (f1 in Asghazadeh's paper)
     case 29
-%         s=0;
-%         for kkk=1:NDecisionVariable
-%             s=s+((X(i,kkk))^2);
-%         end
-%         ft=s;
+        s=0;
+        for kkk=1:NDecisionVariable
+            s=s+((X(i,kkk)).^2);
+        end
+        ft=s;
 
-        ft=sumsqr(X(i,:));
+%         ft=sumsqr(X(i,:));
        
         
         

@@ -5,8 +5,8 @@ Out = [];
 %%Common parameters setting
 Out.Npopulation = 20;  %Population size - CSA:20
 Out.Function = 29;  %Number of Mathematical function according to fitness file
-Out.NRun = 5; %Number of runs - CSA:30
-Out.MaxIter = 1000;  %Maximum number of iterations - CSA:2000 -->  20*30 * 2000 = 1200000, 
+Out.NRun = 30; %Number of runs - CSA:30
+Out.MaxIter = 2000;  %Maximum number of iterations - CSA:2000 -->  20*30 * 2000 = 1200000, 
 
 
 
@@ -28,7 +28,7 @@ Out.ObjectiveType=0 ; %(0 Minimization, 1 Maximization)
 switch upper(caseString)
     case 'CSA'
         %%Parameters setting for the CSA
-        Out.AP = 0.5;    %0.20; % Awareness probability
+        Out.AP = 0.02;    %0.20; % Awareness probability
         Out.fl = 2.0;     %3.0; % Flight length (fl)
     case 'PSO'
         %%Parameters setting for the PSO
@@ -63,8 +63,8 @@ switch upper(caseString)
 %       Out.hunt_support=-0.001;  
 % rng (20)
 
-      Out.Hunt_Boss=2;   
-      Out.hunt_support=-0.05; 
+      Out.Hunt_Boss=1.5;   
+      Out.hunt_support= 0.05; 
 
 
 end

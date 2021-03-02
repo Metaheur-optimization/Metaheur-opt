@@ -57,7 +57,7 @@ for iRun=1:Out.NRun
    
     %% NAL Main Loop
     Bestfit = zeros(1,Out.MaxIter);
-    Xnew=zeros(Npopulation,NDecisionVariable);  % Copied from CSA. don't know whether we need it in LAL
+    
     for iIter=1:Out.MaxIter % Maximum number of iterations (itermax)
         NFE=0;
         PenaltyCount=0;
@@ -75,6 +75,7 @@ for iRun=1:Out.NRun
             for j=1:NDecisionVariable % Update position and memory
                 if NewBossLionPositionMemory(i,j)<LowerBound(j) || NewBossLionPositionMemory(i,j)>UpperBound(j)
                     Bool=0;
+                    NewBossLionPositionMemory(i, NDecisionVariable+1) = 10^18;
                     break
                 end
             end
@@ -113,6 +114,7 @@ for iRun=1:Out.NRun
             for j=1:NDecisionVariable % Update position and memory
                 if NewSupportLionPositionMemory(s,j)<LowerBound(j) || NewSupportLionPositionMemory(s,j)>UpperBound(j)
                     Bool=0;
+                    NewSupportLionPositionMemory(s, NDecisionVariable+1) = 10^18;
                     break
                 end
             end

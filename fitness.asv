@@ -224,7 +224,7 @@ switch Out.Function
 %         end
 %         ft=s;
 
-        ft=sumsqr(X(i,:));
+        ft(i, :)=sumsqr(X(i,:));
        
         
         
