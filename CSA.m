@@ -24,9 +24,20 @@ for iRun=1:Out.NRun
     %% initialization
     Position=init(Out); % Initialization of solutions
 %     Position(1,:)=[0.0516890284000, 0.3567169544000, 11.2890117993000];
-    [fitnessMemory(1:Npopulation), BoolPenalty(1:Npopulation)] = fitness(Position, 1:Npopulation, Out);   % Fitness evaluation
-    PenaltyCountAll = sum(BoolPenalty);
-    NFEAll=NFEAll+Npopulation;     %????
+    
+%     [fitnessMemory(1:Npopulation), BoolPenalty(1:Npopulation)] = fitness(Position, 1:Npopulation, Out);   % Fitness evaluation
+%     PenaltyCountAll = sum(BoolPenalty);
+%     NFEAll=NFEAll+Npopulation;     %????
+    
+    
+    for i=1:Npopulation
+        [fitnessMemory(i), BoolPenalty] = fitness(Position, i, Out);   % Fitness evaluation
+        NFEAll=NFEAll+1;
+        if BoolPenalty==1
+            PenaltyCountAll=PenaltyCountAll+1;
+        end
+    end
+    
     PositionMemory=Position; % Memorise Position of solutions
     Results.NFE(iRun,1)=NFEAll;
     Results.Feasible(iRun,1)=Npopulation-PenaltyCountAll;

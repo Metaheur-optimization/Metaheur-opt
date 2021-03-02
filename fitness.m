@@ -4,7 +4,6 @@ function [ft,PenaltyBool]=fitness(X,i,Out) % Function for fitness evaluation
 Npopulation=Out.Npopulation;
 NDecisionVariable=Out.NDecisionVariable;
 PenaltyBool=0;
-
 switch Out.Function
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% GENERAL FUNCTIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -115,13 +114,13 @@ switch Out.Function
         ft=1-cos(2*pi*sqrt(sum(xi(i,:))))+ 0.1*sqrt(sum(xi(i,:)));
         %% 19. Rosenbrock problem (f2 in Asghazadeh's paper)
     case 19
-        %s=zeros(1,NDecisionVariable-1);
+%         s=zeros(1,NDecisionVariable-1);
 %         s=0;
 %         for j=1:NDecisionVariable-1
-%             T1=(X(i,j))^2;
+%             T1=(X(i,j)).^2;
 %             T2=X(i,j+1);
-%             T3=((T1-T2)^2)*100;
-%             T4=(X(i,j)-1)^2;
+%             T3=((T1-T2).^2)*100;
+%             T4=(X(i,j)-1).^2;
 %             
 %             T5=(T3+T4);
 %             s=s+T5;
@@ -129,8 +128,8 @@ switch Out.Function
 %         end
 %         ft=s;
         
-        ft=sum(100*(X(i,2:end)-X(i,1:end-1).^2).^2+(X(i,1:end-1)-1).^2);
-
+        s=sum(100*(X(i,2:end)-X(i,1:end-1).^2).^2+(X(i,1:end-1)-1).^2);
+        ft=s;
         %% 20. Box-Betts' Exponential Quadratic Sum Function:
     case 20
         g=zeros(1,10);
@@ -220,11 +219,10 @@ switch Out.Function
     case 29
 %         s=0;
 %         for kkk=1:NDecisionVariable
-%             s=s+((X(i,kkk))^2);
+%             s=s+((X(i,kkk)).^2);
 %         end
 %         ft=s;
-
-        ft=sumsqr(X(i,:));
+      ft=sumsqr(X(i,:));
        
         
         
