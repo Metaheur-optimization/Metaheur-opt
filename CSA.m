@@ -52,7 +52,7 @@ for iRun=1:Out.NRun
         for i=1:Npopulation
             r=rand;
             if r>AP
-                Xnew(i,1:NDecisionVariable)= Position(i,1:NDecisionVariable)+fl*(PositionMemory(num(i),1:NDecisionVariable)-Position(i,1:NDecisionVariable)); % Generation of a new position for crow i (state 1)
+                Xnew(i,:)= Position(i,:)+fl*(PositionMemory(num(i),:)-Position(i,:)); % Generation of a new position for crow i (state 1)
             else
                 random_array = rand(1, NDecisionVariable);
                 Xnew(i,:)=LowerBound(1,:)+(UpperBound(1,:)-LowerBound(1,:)).*random_array(1,:); % Generation of a new position for crow i (state 2)
