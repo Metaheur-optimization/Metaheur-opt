@@ -18,6 +18,18 @@ NoFuncEval=0; % Number of function Evalutions
 LB=Out.LowerBound(1);
 UB=Out.UpperBound(1);
 
+%hunt_support=linspace(-0.001,0.001,Out.MaxIter);
+
+% NoIter=Out.MaxIter;
+% Hunt_BossMatrix=[];
+% hunt_supportMatrix=[];
+% for i=1:NDecisionVariable;
+%     A = linspace(out.LowerBound(i), out.UpperBound(i), out.MaxIter);
+%     hunt_support(i, 1:out.maxIter) = A;
+% end
+
+
+
 %%% indicators definintion %%%%%%
 Results.AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
 Results.AllBestSolution=zeros(Out.NRun,Out.NDecisionVariable);
@@ -28,6 +40,14 @@ NFEAll=0;
 Results.PenaltyCount=0;
 PenaltyCountAll=0;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ NumberofLionSupport=(NoofSupportLion/NoofBossLions);
+ A = 1:NoofBossLions; 
+ B = A;
+ for kk=1:(NumberofLionSupport-1)
+     B = [A, B];         
+ end
+
 
 
 for iRun=1:Out.NRun
@@ -48,12 +68,12 @@ for iRun=1:Out.NRun
     % Plotting Positions
     BossLionPosition=BossLionPositionMemory;
     SupportLionPosition=SupportLionPositionMemory;
-   % P=PlotPositions(BossLionPosition,SupportLionPosition,NDecisionVariable,NoFuncEval);
+    %P=PlotPositions(iIter,BossLionPosition,SupportLionPosition,NDecisionVariable,NoFuncEval);
    
     %% NAL Main Loop
     for iIter=1:Out.MaxIter % Maximum number of iterations (itermax)
         
-        
+       % randi([Out.LowerBound(j),Out.UpperBound(j)],1,1)
         % 1. Generate New Boss_Lions 
         RandomBossLionIndex=reshape(randperm(NoofBossLions),[],1);
 %         RandomLionHunt=randi([1 3],1,NoofBossLions);
@@ -61,7 +81,26 @@ for iRun=1:Out.NRun
             for j=1:NDecisionVariable
                 NewBossLionPositionMemory(i,j)=BossLionPositionMemory(i,j)+rand*Hunt_Boss*(BossLionPositionMemory(RandomBossLionIndex(i),j)-BossLionPositionMemory(i,j));
 
-              % NewBossLionPositionMemory(i,j)=BossLionPositionMemory(i,j)+rand*Hunt_Boss*((BossLionPositionMemory(RandomBossLionIndex(i),j)-BossLionPositionMemory(i,j))/2);    
+              
+                
+               % NewBossLionPositionMemory(i,j)=BossLionPositionMemory(i,j)+rand*Hunt_Boss*(BossLionPositionMemory(i,j)-BossLionPositionMemory(i,j));
+                  
+%                
+%                    TT=rand*Hunt_Boss*(BossLionPositionMemory(RandomBossLionIndex(i),j)-BossLionPositionMemory(i,j));
+%                    
+%                     Old=BossLionPositionMemory(i,j);
+%                     Neww=Old+TT;
+%                     NewBossLionPositionMemory(i,j)=Neww;
+               
+
+                if NewBossLionPositionMemory(i,j) < Out.LowerBound(j) || NewBossLionPositionMemory(i,j) > Out.UpperBound(j) 
+                   NewBossLionPositionMemory(i,j)=Out.LowerBound(j)+(Out.UpperBound(j)-Out.LowerBound(j))*rand;
+
+                end
+
+
+
+
 
             end
         end
@@ -77,17 +116,48 @@ for iRun=1:Out.NRun
         
         
         
-            
-        % 2. Generate New Support_Lions     
+            %randi([Out.LowerBound(j),Out.UpperBound(j)],1,1)
+        % 2. Generate New Support_Lions 
+        
+          
+        
+        
         for s=1:NoofSupportLion
+                 selected_Boss = randperm(NoofBossLions,1);
             for k=1:NDecisionVariable
-               NewSupportLionPositionMemory(s,k)=NewBossLionPositionMemory(randperm(NoofBossLions,1),k)+rand*hunt_support*(NewBossLionPositionMemory(randperm(NoofBossLions,1),k));
-               % NewSupportLionPositionMemory(s,k)=NewBossLionPositionMemory(randperm(NoofBossLions,1),k)+rand*(NewBossLionPositionMemory(randperm(NoofBossLions,1),k));          
+               
+                NewSupportLionPositionMemory(s,k) = NewBossLionPositionMemory(B(s), k) + (-1 + (2 * rand))*((Out.UpperBound(k) - Out.LowerBound(k))/(2*(NoofBossLions + 1)));
+             
+                
+             % NewSupportLionPositionMemory(s,k) = NewBossLionPositionMemory(B(s), k) + (-1 + (2 * rand))*((Out.UpperBound(k) - Out.LowerBound(k))/(2*(NoofBossLions + 1)))-NewBossLionPositionMemory(selected_Boss, k);
+               
+                
+                %NewSupportLionPositionMemory(s,k)=NewBossLionPositionMemory(selected_Boss,k)+rand*hunt_support*(NewBossLionPositionMemory(selected_Boss,k));
+
+              %   NewSupportLionPositionMemory(s,k)=NewBossLionPositionMemory(randperm(NoofBossLions,1),k)+rand*hunt_support*(NewBossLionPositionMemory(randperm(NoofBossLions,1),k));
+              
+               %NewSupportLionPositionMemory(s,k)=NewBossLionPositionMemory(randperm(NoofBossLions,1),k)+rand*hunt_support(iIter)*(NewBossLionPositionMemory(randperm(NoofBossLions,1),k));  
+               
+              %tt=rand*hunt_support(iIter)*(NewBossLionPositionMemory(randperm(NoofBossLions,1),k));
+%                NewSupportLionPositionMemory(s,k)=NewBossLionPositionMemory(randperm(NoofBossLions,1),k)+rand*hunt_support(iIter)*(NewBossLionPositionMemory(randperm(NoofBossLions,1),k));
+               
+                    if NewSupportLionPositionMemory(s,k) < Out.LowerBound(k) || NewSupportLionPositionMemory(s,k) > Out.UpperBound(k)
+                        NewSupportLionPositionMemory(s,k)=Out.LowerBound(k)+(Out.UpperBound(k)-Out.LowerBound(k))*rand;
+
+                    end
+
             end
         end
         
+        
+        BossLionPosition=NewBossLionPositionMemory;
+        SupportLionPosition=NewSupportLionPositionMemory;
+      P=PlotPositions(iIter,BossLionPosition,SupportLionPosition,NDecisionVariable,NoFuncEval);
+    
+        
         % evalute objective function
         AllPositionMemory=[NewBossLionPositionMemory(:,1:(end-1));NewSupportLionPositionMemory];
+         %AllPositionMemory=[NewBossLionPositionMemory;NewSupportLionPositionMemory];
         [row, ~] = size(AllPositionMemory);
         for ii=1:row
             fitnessMemory=fitness(AllPositionMemory,ii,Out); % Fitness evaluation
@@ -100,7 +170,7 @@ for iRun=1:Out.NRun
             
     BossLionPosition=BossLionPositionMemory;
     SupportLionPosition=SupportLionPositionMemory;
-   % P=PlotPositions(BossLionPosition,SupportLionPosition,NDecisionVariable,NoFuncEval);
+   % P=PlotPositions(iIter,BossLionPosition,SupportLionPosition,NDecisionVariable,NoFuncEval);
   % pause()
            
     end

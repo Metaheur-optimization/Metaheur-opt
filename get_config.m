@@ -3,21 +3,23 @@ function Out = get_config(caseString)
 Out = [];
 
 %%Common parameters setting
-Out.Npopulation = 20;  %Population size - CSA:20
-Out.NDecisionVariable =10;  %Number of decision variables
-Out.Function = 29;  %Number of Mathematical function according to fitness file
-%Out.EngFunction = 1;  %Number of Engineering function according to Engineering Function file
-Out.NRun = 30; %Number of runs - CSA:30
-Out.MaxIter = 2000;  %Maximum number of iterations - CSA:2000 -->  20*30 * 2000 = 1200000, 
+Out.Npopulation = 100;  %Population size - CSA:20
+Out.NDecisionVariable =3;  %Number of decision variables
+Out.Function = 2;  %Number of Mathematical function according to fitness file
+Out.NRun = 1; %Number of runs - CSA:30
+Out.MaxIter = 3;  %Maximum number of iterations - CSA:2000 -->  20*30 * 2000 = 1200000, 
 
 
 
 %%%%%%%%%% NO need to modify this part   %%%%%%%%%%%%%%%%%%%%%%%%%%%
 bounds = xlsread('FunctionsBounds'); %%% the lower and upper bounds of the functions
-Out.LowerBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
-Out.UpperBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
-Out.LowerBound(:) = bounds(Out.NDecisionVariable, 1); %Lower bound of variables 
-Out.UpperBound(:) = bounds(Out.NDecisionVariable, 1);  %Upper bound of variables
+FunctionColumnIndex=find(bounds(1,:)==Out.Function)
+% Out.LowerBound(:) = bounds(Out.NDecisionVariable, 1); %Lower bound of variables 
+% Out.UpperBound(:) = bounds(Out.NDecisionVariable, 1);  %Upper bound of variables
+% Out.LowerBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
+% Out.UpperBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
+Out.LowerBound = bounds(2:Out.NDecisionVariable+1, FunctionColumnIndex(1)); %Lower bound of variables 
+Out.UpperBound = bounds(2:Out.NDecisionVariable+1, FunctionColumnIndex(2));  %Upper bound of variables
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -65,7 +67,7 @@ switch upper(caseString)
 % rng (20)
 
       Out.Hunt_Boss=2;   
-      Out.hunt_support=-0.05; 
+      Out.hunt_support=-0.01; 
 
 
 end
