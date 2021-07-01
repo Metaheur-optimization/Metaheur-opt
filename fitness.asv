@@ -26,7 +26,7 @@ switch Out.Function
        
         ft = -20*T1-T2+20+exp(1);
         %% 2. Aluffi-Pentini's problem
-    case 2
+    case 6
         ft= 0.25*X(i,1)^4 - 0.5*X(i,1)^2 + 0.1*X(i,1) + 0.5*X(i,2)^2;
         %% 3. Becker and Lago problem
     case 3
@@ -63,7 +63,7 @@ switch Out.Function
         for j=1:NDecisionVariable
             s(1,j)=(sin(X(i,j)))*(sin((j*X(i,j)^2)/pi))^20;
         end
-        ft=-sum(s); 
+        ft=-sum(s); % Sphere function
         %% 13. Goldstein and price problem
     case 13
         ft= (1 + (X(i,1) + X(i,2) + 1)^2 * (19- 14*X(i,1) + 3*X(i,1)^2- 14*X(i,2) + 6*X(i,1)*X(i,2) + 3*X(i,2)^2)) * (30 + (2*X(i,1)- 3*X(i,2))^2 * (18- 32*X(i,1) + 12*X(i,1)^2 + 48*X(i,2) -36*X(i,1)*X(i,2) + 27*X(i,2)^2));
@@ -86,7 +86,7 @@ switch Out.Function
         for j=1:10
             s(j)=(a(j)-(X(i,1)*(b(j)^2+b(j)*X(i,2))/(b(j)^2+b(j)*X(i,3)+X(i,4))))^2;
         end
-        ft=sum(s); 
+        ft=sum(s); % Sphere function
         %% 17. Meyer and roth problem
     case 17
         t=[1 2 1 2 0.1];
@@ -96,7 +96,7 @@ switch Out.Function
         for j=1:5
             s(i,j)=(((X(i,1)*X(i,3)*t(j))/(1+X(i,1)*t(j)+X(i,2)*v(j)))-y(j))^2;
         end
-        ft=sum(s(i,:)); 
+        ft=sum(s(i,:)); % Sphere function
         %% 18. Miele and cantrell problem
     case 18
         ft(i)=(exp(X(i,1))-X(i,2))^4+100*(X(i,2)-X(i,3))^6+(tan(X(i,3)-X(i,4)))^4+X(i,1)^8;
@@ -119,7 +119,7 @@ switch Out.Function
         for j=1:NDecisionVariable-1
             s(1,j)=100*((X(i,j+1)-X(i,j)^2)^2)+(X(i,j)-1)^2;
         end
-        ft=sum(s(1,:)); 
+        ft=sum(s(1,:)); % Sphere function
         %% 20. Box-Betts' Exponential Quadratic Sum Function:
     case 20
         g=zeros(1,10);
@@ -127,7 +127,7 @@ switch Out.Function
             g(j)=(exp(-0.1*j*X(i,1))-exp(-0.1*j*X(i,2))-(exp(-0.1*j)-exp(-j))*X(i,3))^2;
         end
         
-        ft = sum(g);
+        ft = sum(g);% Sphere function
         %% 21. Deflected corrugated spring problem
     case 21
         s=zeros(1,NDecisionVariable);

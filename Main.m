@@ -19,7 +19,6 @@ switch Algorithm
         
   case 'LAL'
         [Results]=LAL(Out);      
-     
 end
 toc
 
