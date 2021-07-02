@@ -1,6 +1,7 @@
 % %The main file to set the algorithms and run for CSA, PSO, and GA
 tic
 format long; close all; clc; clear; 
+rng('default')
 addpath('plots')
 Algorithm='LAL'; 
 
