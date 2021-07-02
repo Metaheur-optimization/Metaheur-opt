@@ -388,7 +388,7 @@ switch Out.Function
        
        for j=1:7
             if g(j)<0
-                penalty=penalty+5*10^6*(1+g(j));
+                penalty=penalty+5*10^6*(1+abs(g(j)));
                 PenaltyBool=1;
             end
         end

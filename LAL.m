@@ -82,7 +82,11 @@ for iRun=1:Out.NRun
                 NewBossLionPositionMemory(i,j)=BossLionPositionMemory(i,j)+rand*Hunt_Boss*(BossLionPositionMemory(RandomBossLionIndex(i),j)-BossLionPositionMemory(i,j));
                 if NewBossLionPositionMemory(i,j) < Out.LowerBound(j) || NewBossLionPositionMemory(i,j) > Out.UpperBound(j) 
                    NewBossLionPositionMemory(i,j)=Out.LowerBound(j)+(Out.UpperBound(j)-Out.LowerBound(j))*rand;
-
+                end
+                if (Out.Function == 39) && (j == 2)
+                    if NewBossLionPositionMemory(i,2) >= NewBossLionPositionMemory(i,1)
+                        NewBossLionPositionMemory(i,2) = rand * NewBossLionPositionMemory(i,1);
+                    end
                 end
             end
         end
@@ -104,6 +108,11 @@ for iRun=1:Out.NRun
 %                 NewSupportLionPositionMemory(s,k) = NewBossLionPositionMemory(B(s), k) + (-1 + (2 * rand))*((Out.UpperBound(k) - Out.LowerBound(k))/(2*(NoofBossLions + 1)));
                 if NewSupportLionPositionMemory(s,k) < Out.LowerBound(k) || NewSupportLionPositionMemory(s,k) > Out.UpperBound(k)
                     NewSupportLionPositionMemory(s,k)=Out.LowerBound(k)+(Out.UpperBound(k)-Out.LowerBound(k))*rand;
+                end
+                if (Out.Function == 39) && (k == 2)
+                    if NewBossLionPositionMemory(s,2) >= NewBossLionPositionMemory(s,1)
+                        NewBossLionPositionMemory(s,2) = rand * NewBossLionPositionMemory(s,1);
+                    end
                 end
             end
         end

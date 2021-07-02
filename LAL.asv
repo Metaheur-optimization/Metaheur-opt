@@ -82,7 +82,11 @@ for iRun=1:Out.NRun
                 NewBossLionPositionMemory(i,j)=BossLionPositionMemory(i,j)+rand*Hunt_Boss*(BossLionPositionMemory(RandomBossLionIndex(i),j)-BossLionPositionMemory(i,j));
                 if NewBossLionPositionMemory(i,j) < Out.LowerBound(j) || NewBossLionPositionMemory(i,j) > Out.UpperBound(j) 
                    NewBossLionPositionMemory(i,j)=Out.LowerBound(j)+(Out.UpperBound(j)-Out.LowerBound(j))*rand;
-
+                end
+                if (Out.Function == 39) && (j == 2)
+                    if NewBossLionPositionMemory(i,2) >= NewBossLionPositionMemory(i,1)
+                        NewBossLionPositionMemory(i,2) = 
+                    end
                 end
             end
         end
@@ -135,7 +139,7 @@ for iRun=1:Out.NRun
     %% Saving results of the solution
     
     BestSolution(iRun,1)=AllNewPositionMemory(1,end);
-    Results.AllBestSolution(iRun,:) = AllNewPositionMemory(1, 1:);
+    Results.AllBestSolution(iRun,:) = AllNewPositionMemory(1, 1:(end-1));
     iRun
 end
 Mea=mean(BestSolution(:,1))
