@@ -3,20 +3,23 @@ function Out = get_config(caseString)
 Out = [];
 
 %%Common parameters setting
-Out.Npopulation = 20;  %Population size - CSA:20
-Out.Function = 29;  %Number of Mathematical function according to fitness file
-Out.NRun = 5; %Number of runs - CSA:30
-Out.MaxIter = 1000;  %Maximum number of iterations - CSA:2000 -->  20*30 * 2000 = 1200000, 
+Out.Npopulation = 50;  %Population size - CSA:20
+Out.NDecisionVariable =4;  %Number of decision variables
+Out.Function = 39;  %Number of Mathematical function according to fitness file
+Out.NRun = 50; %Number of runs - CSA:30
+Out.MaxIter = 100;  %Maximum number of iterations - CSA:2000 -->  20*30 * 2000 = 1200000, 
 
 
 
 %%%%%%%%%% NO need to modify this part   %%%%%%%%%%%%%%%%%%%%%%%%%%%
-data_temp = xlsread('FunctionsBounds', 'NoDecisionvar');
-Out.NDecisionVariable = data_temp(Out.Function);  %Number of decision variables
-data_temp = xlsread('FunctionsBounds', 'lower');
-Out.LowerBound = data_temp(Out.Function, 1:Out.NDecisionVariable); %Lower bound of variables
-data_temp = xlsread('FunctionsBounds', 'upper');
-Out.UpperBound = data_temp(Out.Function, 1:Out.NDecisionVariable); %Upper bound of variables
+bounds = xlsread('FunctionsBounds'); %%% the lower and upper bounds of the functions
+FunctionColumnIndex=find(bounds(1,:)==Out.Function);
+% Out.LowerBound(:) = bounds(Out.NDecisionVariable, 1); %Lower bound of variables 
+% Out.UpperBound(:) = bounds(Out.NDecisionVariable, 1);  %Upper bound of variables
+% Out.LowerBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
+% Out.UpperBound = zeros(Out.NDecisionVariable,1); %Lower bound of variables
+Out.LowerBound = bounds(2:Out.NDecisionVariable+1, FunctionColumnIndex(1)); %Lower bound of variables 
+Out.UpperBound = bounds(2:Out.NDecisionVariable+1, FunctionColumnIndex(2));  %Upper bound of variables
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -28,7 +31,7 @@ Out.ObjectiveType=0 ; %(0 Minimization, 1 Maximization)
 switch upper(caseString)
     case 'CSA'
         %%Parameters setting for the CSA
-        Out.AP = 0.5;    %0.20; % Awareness probability
+        Out.AP = 0.02;    %0.20; % Awareness probability
         Out.fl = 2.0;     %3.0; % Flight length (fl)
     case 'PSO'
         %%Parameters setting for the PSO
@@ -50,21 +53,21 @@ switch upper(caseString)
         
     case 'LAL'
   % good for both F1, f3 and f5   
-%      Out.Hunt_Boss=2;   
-%       Out.hunt_support=-0.01;  
+     Out.Hunt_Boss=4;   
+      Out.hunt_support=0.000005;  
 
 
 % good for F2
-%       Out.Hunt_Boss=5;   
-%       Out.hunt_support=0.001;        
+%       Out.Hunt_Boss=2;   
+%       Out.hunt_support=0.0001;        
 
 % good for F2
 %       Out.Hunt_Boss=2;   
 %       Out.hunt_support=-0.001;  
 % rng (20)
 
-      Out.Hunt_Boss=2;   
-      Out.hunt_support=-0.05; 
+%       Out.Hunt_Boss=2;   
+%       Out.hunt_support=-0.01; 
 
 
 end
