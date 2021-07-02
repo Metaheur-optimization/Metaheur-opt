@@ -1,16 +1,27 @@
-function  [P P1]=PlotPositions(BossLionPosition,SupportLionPosition,NDecisionVariable,NoFuncEval);
+function  [P P1]=PlotPositions(iIter,BossLionPosition,SupportLionPosition,NDecisionVariable,NoFuncEval);
    
+% colors={'b' 'r' 'g' 'y'}
+% rand=randperm(numel(colors),1)
+% randcolors=colors(rand)
 
+
+colors=[0.4 1];
+r1=randperm(2,1);
+r2=randperm(2,1);
+r3=randperm(2,1);
+c=[colors(r1) colors(r2) colors(r3)]
 
 figure(1)
-P=plot3(BossLionPosition(:,1),BossLionPosition(:,2),BossLionPosition(:,3),'ro','MarkerSize',10)
+%P=plot3(BossLionPosition(:,1),BossLionPosition(:,2),BossLionPosition(:,3),'ro','MarkerSize',10)
+P=plot3(BossLionPosition(:,1),BossLionPosition(:,2),BossLionPosition(:,3),'ro','MarkerFaceColor',c,'MarkerSize',10)
+
 grid on
 hold on
 
-P=plot3(SupportLionPosition(:,1),SupportLionPosition(:,2),SupportLionPosition(:,3),'b*','MarkerSize',8)
+P=plot3(SupportLionPosition(:,1),SupportLionPosition(:,2),SupportLionPosition(:,3),'b*','MarkerFaceColor',c,'MarkerSize',8)
 
 
-
+legend('Boss Lions', 'Support Lions')
 
 % x=1:length(BossLionPosition(:,end));
 % P=scatter(x,BossLionPosition(:,end),40,'MarkerEdgeColor',[0 .5 .5],...

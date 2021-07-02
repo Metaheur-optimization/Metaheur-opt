@@ -216,7 +216,7 @@ switch Out.Function
     case 31 %Griewank function
        In=1:size(X,2);
         ft=sumsqr(X(i,:))/4000-prod(cos(X(i,:)./sqrt(In(1,:))))+1;
-    
+
     case 32 %Rosenbrock problem
      ft=sum(100*(X(i,2:end)-X(i,1:end-1).^2).^2+(X(i,1:end-1)-1).^2); 
      
@@ -228,8 +228,7 @@ switch Out.Function
          p=p*abs(X(i,hh));  
          T1=T1+abs(X(i,hh));
        end
-       ft=T1+p;
-       
+       ft=T1+p;    
        
        %% Engineering problems 
     case 34 % Tension problem
