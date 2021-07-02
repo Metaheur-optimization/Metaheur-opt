@@ -300,7 +300,7 @@ switch Out.Function
     case 36  % Gear Train design
         
         
-        ft= ((1/6.931)-((X(i,3)*X(i,2))/(X(i,1)*X(i,4))))^2;
+        ft= ((1/6.931)-((floor(X(i,3))*floor(X(i,2)))/(floor(X(i,1))* floor(X(i,4)))))^2;
         
     case 37  % Three-bar truss design problem
         
@@ -360,22 +360,22 @@ switch Out.Function
         ft=cost+penalty;
         
     case 39  % Belleville spring design problem
-       g=zeros(1,6);                  %Constraint functions values
-        a=1.4:0.1:2.8;
+        g=zeros(1,6);                  %Constraint functions values
+        step=1.4:0.1:2.8;
         fa=[1 0.85 0.77 0.71 0.66 0.63 0.6 0.58 0.56 0.55 0.53 0.52 0.51 0.51 0.5];
-        F=[a;fa]';
+        F=[step;fa];
         a=ceil(X(i,3)/X(i,4));
         penalty=0;
-          k=(X(i,1)/X(i,2));
-       sigma=(6/(pi*log(k)))*((log(k)-1)/log(k)).^2;
-       beta=(6/(pi*log(k)))*(((log(k)-1)/(log(k)))-1);
-       Alfa=(6/(pi*log(k)))*((log(k)-1)/log(k));
+        k=(X(i,1)/X(i,2));
+        sigma=(6/(pi*log(k)))*((log(k)-1)/log(k)).^2;
+        beta=(6/(pi*log(k)))*(((log(k)-1)/(log(k)))-1);
+        Alfa=(6/(pi*log(k)))*((log(k)-1)/log(k));
        if a<=1 
-       sigmaOne=a*1;
-       elseif a>=2.8;
+           sigmaOne=a*1;
+       elseif a>=2.8
            sigmaOne=a*0.5;
        else
-       sigmaOne=a*F(find(F==a),2);
+           sigmaOne=a*F(2, find(F==a));
        end
        g(1)=200 -((4*30*10^6*0.2)/(0.91*sigma*(X(i,1)).^2))*(beta*(X(i,3)-0.1)+(Alfa*X(i,4)));
        g(2)=(((4*30*10^6*0.2)/(0.91*sigma*(X(i,1)).^2))*(((X(i,3)-0.1)*(X(i,3)-.2)*X(i,4))+(X(i,4)).^4))-5400;
@@ -403,9 +403,39 @@ switch Out.Function
         penalty=0;
         
 %         g(1)=
+    
+    
+    
+    
+    % Tension/compression spring design 
+    case 41   
+        g=zeros(1,4);                  %Constraint functions values
+        penalty=0;
+        
+        numin_g1 = (X(i,2)^3) * X(i,3);
+        denom_g1 = 71785 * (X(i,1)^4);
+        g(1)=1 - (numin_g1/denom_g1);
+        
+        numin_g2 = 4 * (X(i,2)^2) - (X(i,1)*X(i,2));
+        denom_g2_1 = 12566 * ((X(i,2) * (X(i,1)^3)) - (X(i,1)^4));
+        denom_g2_2 = 5108 * (X(i,1)^2);
+        g(2)=(numin_g2/denom_g2_1) + (1/denom_g2_2) - 1;
+        
+        numin_g3 = 140.45 * X(i,1);
+        denum_g3 = (X(i,2)^2) * X(i,3);
+        g(3)= 1 - (numin_g3/denum_g3);
+        
+        numin_g4 = X(i,1) + X(i,2);
+        g(4)=(numin_g4/1.5) - 1;
+        
+        for j=1:4
+            if g(j) > 0
+                penalty=penalty+10^2*(1+g(j));
+                PenaltyBool=1;
+            end
+        end
         
         
-        
-        
+        ft = (X(i,3) + 2) * X(i,2) * (X(i,1)^2) + penalty;
 end
 

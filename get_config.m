@@ -3,9 +3,9 @@ function Out = get_config(caseString)
 Out = [];
 
 %%Common parameters setting
-Out.Npopulation = 100;  %Population size - CSA:20
-Out.NDecisionVariable =2;  %Number of decision variables
-Out.Function = 37;  %Number of Mathematical function according to fitness file
+Out.Npopulation = 50;  %Population size - CSA:20
+Out.NDecisionVariable =4;  %Number of decision variables
+Out.Function = 39;  %Number of Mathematical function according to fitness file
 Out.NRun = 50; %Number of runs - CSA:30
 Out.MaxIter = 1000;  %Maximum number of iterations - CSA:2000 -->  20*30 * 2000 = 1200000, 
 
@@ -53,8 +53,8 @@ switch upper(caseString)
         
     case 'LAL'
   % good for both F1, f3 and f5   
-     Out.Hunt_Boss=2.05;   
-      Out.hunt_support=0.0009;  
+     Out.Hunt_Boss=1;   
+      Out.hunt_support=0.05;  
 
 
 % good for F2
