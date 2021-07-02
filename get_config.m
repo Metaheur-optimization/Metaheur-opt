@@ -28,8 +28,8 @@ Out.ObjectiveType=0 ; %(0 Minimization, 1 Maximization)
 switch upper(caseString)
     case 'CSA'
         %%Parameters setting for the CSA
-        Out.AP = 0.02;    %0.20; % Awareness probability
-        Out.fl = 2.0;     %3.0; % Flight length (fl)
+        Out.AP = 0.05;    %0.20; % Awareness probability
+        Out.fl = 1.5;     %3.0; % Flight length (fl)
     case 'PSO'
         %%Parameters setting for the PSO
         Out.InterWeight = 1;            % Inertia Weight
@@ -63,8 +63,8 @@ switch upper(caseString)
 %       Out.hunt_support=-0.001;  
 % rng (20)
 
-      Out.Hunt_Boss=1.5;   
-      Out.hunt_support= 0.05; 
+      Out.Hunt_Boss=2;   
+      Out.hunt_support=-0.05; 
 
 
 end

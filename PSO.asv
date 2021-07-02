@@ -41,8 +41,8 @@ for iRun=1:Out.NRun
     Position=init(Out); % Initialization of solutions
     for i=1:Npopulation
     %     Fitness =fitness(Position,Out); % Fitness evaluation
-%       [Best.Fitness(i), BoolPenalty]=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
-        [Best.Fitness(i), BoolPenalty] = fitness(Position, i, Out);   % Fitness evaluation
+%        [Best.Fitness(i), BoolPenalty]=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
+        [fitnessMemory(1:Npopulation), BoolPenalty(1:Npopulation)] = fitness(Position, 1:Npopulation, Out);   % Fitness evaluation
 
         NFEAll=NFEAll+1;
         if BoolPenalty==1
@@ -88,8 +88,7 @@ for iRun=1:Out.NRun
             end
             if(Bool==1)
                 %     Fitness =fitness(Position,Out); % Fitness evaluation
-%                 [Fitn,BoolPenalty]=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
-                [Fitn, BoolPenalty] = fitness(Position, i, Out);   % Fitness evaluation
+                [Fitn,BoolPenalty]=EngineeringFitness(Position,i,Out.EngFunction); % Fitness evaluation
                 if BoolPenalty==1
                     PenaltyCountAll=PenaltyCountAll+1;
                     PenaltyCount=PenaltyCount+1;
