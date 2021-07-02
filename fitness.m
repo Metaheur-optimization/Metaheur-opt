@@ -216,6 +216,7 @@ switch Out.Function
     case 31 %Griewank function
        In=1:size(X,2);
         ft=sumsqr(X(i,:))/4000-prod(cos(X(i,:)./sqrt(In(1,:))))+1;
+    
     case 32 %Rosenbrock problem
      ft=sum(100*(X(i,2:end)-X(i,1:end-1).^2).^2+(X(i,1:end-1)-1).^2); 
      
