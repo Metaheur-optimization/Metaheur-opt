@@ -216,7 +216,7 @@ switch Out.Function
     case 31 %Griewank function
        In=1:size(X,2);
         ft=sumsqr(X(i,:))/4000-prod(cos(X(i,:)./sqrt(In(1,:))))+1;
-
+    
     case 32 %Rosenbrock problem
      ft=sum(100*(X(i,2:end)-X(i,1:end-1).^2).^2+(X(i,1:end-1)-1).^2); 
      
@@ -228,7 +228,8 @@ switch Out.Function
          p=p*abs(X(i,hh));  
          T1=T1+abs(X(i,hh));
        end
-       ft=T1+p;    
+       ft=T1+p;
+       
        
        %% Engineering problems 
     case 34 % Tension problem
@@ -285,7 +286,7 @@ switch Out.Function
             if g(j)<=0
                 penalty(j)=0;
             else
-                penalty(j)=5*(1+g(j));
+                penalty(j)=10^2*(g(j));
                 PenaltyBool=1;
             end
         end
@@ -343,8 +344,8 @@ switch Out.Function
      g=zeros(1,4);                  %Constraint functions values
         
         penalty=0;
-         g(1)=-X(i,1)+0.0193*X(i,3);
-        g(2)=-X(i,2)+0.00954*X(i,3);
+         g(1)=-(floor(X(i,1)))+0.0193*X(i,3);
+        g(2)=-(floor(X(i,2)))+0.00954*X(i,3);
         g(3)=-pi*X(i,3)^2 *X(i,4)-4/3*pi*X(i,3)^3 +1296000;
         g(4)=X(i,4)-240;
         
@@ -355,7 +356,7 @@ switch Out.Function
             end
         end
         
-        cost =0.6224*X(i,1)*X(i,3)*X(i,4)+1.7781*X(i,2)*X(i,3)^2 +3.1661*X(i,1)^2 *X(i,4)+19.84*X(i,1)^2 *X(i,3);
+        cost =0.6224*(floor(X(i,1)))*X(i,3)*X(i,4)+1.7781*(floor(X(i,2)*X(i,3)^2 +3.1661*X(i,1)^2 *X(i,4)+19.84*X(i,1)^2 *X(i,3);
         
         ft=cost+penalty;
         
@@ -387,7 +388,7 @@ switch Out.Function
        
        for j=1:7
             if g(j)<0
-                penalty=penalty+5*10^6*(1+g(j));
+                penalty=penalty+5*10^6*(1+abs(g(j)));
                 PenaltyBool=1;
             end
         end

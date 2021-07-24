@@ -286,7 +286,7 @@ switch Out.Function
             if g(j)<=0
                 penalty(j)=0;
             else
-                penalty(j)=5*(1+g(j));
+                penalty(j)=10^2*(g(j));
                 PenaltyBool=1;
             end
         end
@@ -344,8 +344,8 @@ switch Out.Function
      g=zeros(1,4);                  %Constraint functions values
         
         penalty=0;
-         g(1)=-X(i,1)+0.0193*X(i,3);
-        g(2)=-X(i,2)+0.00954*X(i,3);
+         g(1)=-(floor(X(i,1)) * 0.0625)+0.0193*X(i,3);
+        g(2)=-(floor(X(i,2)) * 0.0625)+0.00954*X(i,3);
         g(3)=-pi*X(i,3)^2 *X(i,4)-4/3*pi*X(i,3)^3 +1296000;
         g(4)=X(i,4)-240;
         
@@ -356,7 +356,7 @@ switch Out.Function
             end
         end
         
-        cost =0.6224*X(i,1)*X(i,3)*X(i,4)+1.7781*X(i,2)*X(i,3)^2 +3.1661*X(i,1)^2 *X(i,4)+19.84*X(i,1)^2 *X(i,3);
+        cost =0.6224*(floor(X(i,1)) * 0.0625)*X(i,3)*X(i,4)+1.7781*(floor(X(i,2))* 0.0625)*X(i,3)^2 +3.1661*(floor(X(i,1)) * 0.0625)^2 *X(i,4)+19.84*(floor(X(i,1)) * 0.0625)^2 *X(i,3);
         
         ft=cost+penalty;
         
