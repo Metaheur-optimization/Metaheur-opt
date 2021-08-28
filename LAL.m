@@ -7,7 +7,7 @@ Npopulation=Out.Npopulation; % Flock (population) size
 NDecisionVariable=Out.NDecisionVariable; % Problem dimension (number of decision variables)
 fitnessMemory=zeros(1,Npopulation);
 ObjectiveType=Out.ObjectiveType;
-NoofBossLions=ceil(0.15*Npopulation);
+NoofBossLions=ceil(0.7*Npopulation);
 NoofSupportLion=(Npopulation-NoofBossLions);
 
 Hunt_Boss=Out.Hunt_Boss;
@@ -146,6 +146,8 @@ for iRun=1:Out.NRun
     BestSolution(iRun,1)=AllNewPositionMemory(1,end);
     Results.AllBestSolution(iRun,:) = AllNewPositionMemory(1, 1:(end-1));
     iRun
+    AllNewPositionMemory(1,end)
+    
 end
 Mea=mean(BestSolution(:,1))
 St=std(BestSolution(:,1))
@@ -157,7 +159,7 @@ besteverSolution=min(BestSolution(:,1))
  Results.AllNewPositionMemory=AllNewPositionMemory;
  Results.Mea=Mea;
  Results.St=St;
- Results.besteverSolution=besteverSolution;
+ Results.besteverSolution=besteverSolution
  Results.BestSolution=BestSolution;
  
  
