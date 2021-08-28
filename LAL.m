@@ -7,7 +7,7 @@ Npopulation=Out.Npopulation; % Flock (population) size
 NDecisionVariable=Out.NDecisionVariable; % Problem dimension (number of decision variables)
 fitnessMemory=zeros(1,Npopulation);
 ObjectiveType=Out.ObjectiveType;
-NoofBossLions=ceil(0.5*Npopulation);
+NoofBossLions=ceil(0.15*Npopulation);
 NoofSupportLion=(Npopulation-NoofBossLions);
 
 Hunt_Boss=Out.Hunt_Boss;
