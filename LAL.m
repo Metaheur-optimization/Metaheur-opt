@@ -2,7 +2,7 @@
 function [Results]=LAL(Out)
 
 % rng('default');
-rng(20);
+% rng(20);
 Npopulation=Out.Npopulation; % Flock (population) size
 NDecisionVariable=Out.NDecisionVariable; % Problem dimension (number of decision variables)
 fitnessMemory=zeros(1,Npopulation);
@@ -83,11 +83,11 @@ for iRun=1:Out.NRun
                 if NewBossLionPositionMemory(i,j) < Out.LowerBound(j) || NewBossLionPositionMemory(i,j) > Out.UpperBound(j) 
                    NewBossLionPositionMemory(i,j)=Out.LowerBound(j)+(Out.UpperBound(j)-Out.LowerBound(j))*rand;
                 end
-                if (Out.Function == 39) && (j == 2)
-                    if NewBossLionPositionMemory(i,2) >= NewBossLionPositionMemory(i,1)
-                        NewBossLionPositionMemory(i,2) = rand * NewBossLionPositionMemory(i,1);
-                    end
-                end
+%                 if (Out.Function == 39) && (j == 2)
+%                     if NewBossLionPositionMemory(i,2) >= NewBossLionPositionMemory(i,1)
+%                         NewBossLionPositionMemory(i,2) = rand * NewBossLionPositionMemory(i,1);
+%                     end
+%                 end
             end
         end
         %%% memory for Lions %%%%%%
@@ -105,30 +105,36 @@ for iRun=1:Out.NRun
             selected_Boss = randperm(NoofBossLions,1);
             for k=1:NDecisionVariable
                 NewSupportLionPositionMemory(s,k)=NewBossLionPositionMemory(randperm(NoofBossLions,1),k)+rand*hunt_support*(NewBossLionPositionMemory(randperm(NoofBossLions,1),k));
+%                 NewSupportLionPositionMemory(s,k)=NewBossLionPositionMemory(selected_Boss,k)+rand*hunt_support*(NewBossLionPositionMemory(selected_Boss,k));
 %                 NewSupportLionPositionMemory(s,k) = NewBossLionPositionMemory(B(s), k) + (-1 + (2 * rand))*((Out.UpperBound(k) - Out.LowerBound(k))/(2*(NoofBossLions + 1)));
                 if NewSupportLionPositionMemory(s,k) < Out.LowerBound(k) || NewSupportLionPositionMemory(s,k) > Out.UpperBound(k)
                     NewSupportLionPositionMemory(s,k)=Out.LowerBound(k)+(Out.UpperBound(k)-Out.LowerBound(k))*rand;
                 end
-                if (Out.Function == 39) && (k == 2)
-                    if NewBossLionPositionMemory(s,2) >= NewBossLionPositionMemory(s,1)
-                        NewBossLionPositionMemory(s,2) = rand * NewBossLionPositionMemory(s,1);
-                    end
-                end
+%                 if (Out.Function == 39) && (k == 2)
+%                     if NewBossLionPositionMemory(s,2) >= NewBossLionPositionMemory(s,1)
+%                         NewBossLionPositionMemory(s,2) = rand * NewBossLionPositionMemory(s,1);
+%                     end
+%                 end
             end
         end
                 
-        BossLionPosition=NewBossLionPositionMemory;
-        SupportLionPosition=NewSupportLionPositionMemory;
+%         BossLionPosition=NewBossLionPositionMemory;
+%         SupportLionPosition=NewSupportLionPositionMemory;
       %P=PlotPositions(iIter,BossLionPosition,SupportLionPosition,NDecisionVariable,NoFuncEval);
-    
-        % evalute objective function
-        AllPositionMemory=[NewBossLionPositionMemory(:,1:(end-1));NewSupportLionPositionMemory];
-         %AllPositionMemory=[NewBossLionPositionMemory;NewSupportLionPositionMemory];
-        [row, ~] = size(AllPositionMemory);
+        [row, ~] = size(NewSupportLionPositionMemory);
         for ii=1:row
-            fitnessMemory=fitness(AllPositionMemory,ii,Out); % Fitness evaluation
-            AllPositionMemory(ii,Out.NDecisionVariable+1)=fitnessMemory;
+            fitnessMemory=fitness(NewSupportLionPositionMemory,ii,Out); % Fitness evaluation
+            NewSupportLionPositionMemory(ii,Out.NDecisionVariable+1)=fitnessMemory;
         end
+        AllPositionMemory=[NewBossLionPositionMemory; NewSupportLionPositionMemory];
+        % evalute objective function
+%         AllPositionMemory=[NewBossLionPositionMemory(:,1:(end-1));NewSupportLionPositionMemory];
+         %AllPositionMemory=[NewBossLionPositionMemory;NewSupportLionPositionMemory];
+%         [row, ~] = size(AllPositionMemory);
+%         for ii=1:row
+%             fitnessMemory=fitness(AllPositionMemory,ii,Out); % Fitness evaluation
+%             AllPositionMemory(ii,Out.NDecisionVariable+1)=fitnessMemory;
+%         end
         
          % Assess Fittness Values
         [AllNewPositionMemory,BossLionPositionMemory,SupportLionPositionMemory]=ObjFucEval(AllPositionMemory,ObjectiveType,NoofBossLions);  %(ObjectiveType: 0 Minimization, 1 Maximization) 

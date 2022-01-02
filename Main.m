@@ -1,7 +1,8 @@
 % %The main file to set the algorithms and run for CSA, PSO, and GA
 tic
 format long; close all; clc; clear; 
-rng('default')
+% rng('default')
+rng(0)
 addpath('plots')
 Algorithm='LAL'; 
 
@@ -18,7 +19,7 @@ switch Algorithm
     case 'GA'
         [Results]=GA(Out);
         
-  case 'LAL'
+    case 'LAL'
         [Results]=LAL(Out);      
 end
 toc
