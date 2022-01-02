@@ -11,6 +11,7 @@ Out.MaxIter = 250;  %Maximum number of iterations - CSA:2000 -->  20*30 * 2000 =
 
 
 
+
 %%%%%%%%%% NO need to modify this part   %%%%%%%%%%%%%%%%%%%%%%%%%%%
 bounds = xlsread('FunctionsBounds'); %%% the lower and upper bounds of the functions
 FunctionColumnIndex=find(bounds(1,:)==Out.Function);
@@ -54,7 +55,8 @@ switch upper(caseString)
     case 'LAL'
   % good for both F1, f3 and f5   
      Out.Hunt_Boss= 0.4;   
-     Out.hunt_support=0.0002;  
+     Out.hunt_support=0.0002;   
+%Out.hunt_support=0.048;  
 
 
 % good for F2

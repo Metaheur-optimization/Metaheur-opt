@@ -264,20 +264,22 @@ switch Out.Function
         penalty=zeros(1,7);                  %Penalty values
         
         %% Equations
-        Pc=64746.022*(1-0.0282346*X(i,3))*X(i,3)*X(i,4)^3;
-        sig=6*P*L/(X(i,4)*X(i,3)^2);
-        J=2*(sqrt(2)*X(i,1)*X(i,2)*(X(i,2)^2/12 +((X(i,1)+X(i,3))/2)^2));
-        Sig=4*P*L^3/(E*X(i,3)^3 *X(i,4));
-        R=sqrt(X(i,2)^2/4 +((X(i,1)+X(i,3))/2)^2);
-        toep=P/(sqrt(2)*X(i,1)*X(i,2));
-        M=P*(L+X(i,2)/2);
-        toez=M*R/J;
-        toe=sqrt(toep^2 +(2*toep*toez*X(i,2)/(2*R)) +toez^2);
+        const=sqrt((X(i,3)^2*X(i,4)^6)/36);
+        const1=sqrt(E/(4*G));
+        Pc=((4.013*E*const)/L^2)*(1-((X(i,3)/(2*L))*const1));
+        sig=(6*P*L)/(X(i,4)*X(i,3)^2);
+        J=2*(sqrt(2)*X(i,1)*X(i,2)*((X(i,2)^2/12) +((X(i,1)+X(i,3))/2)^2));
+        Sig=(4*P*L^3/(E*X(i,3)^3 *X(i,4)));
+        R=sqrt((X(i,2)^2/4) +((X(i,1)+X(i,3))/2)^2);
+        toep=(P/(sqrt(2)*X(i,1)*X(i,2)));
+        M=P*(L+(X(i,2)/2));
+        toez=((M*R)/J);
+        toe=sqrt(toep^2 +(2*toep*toez*(X(i,2)/(2*R)))+toez^2);
         
         g(1)=toe-toemax;
         g(2)=sig-sigmax;
         g(3)=X(i,1)-X(i,4);
-        g(4)=0.10471*X(i,1)^2 +0.04811*X(i,3)*X(i,4)*(14+X(i,2))-5;
+        g(4)=(0.10471*X(i,1)^2) +(0.04811*X(i,3)*X(i,4)*(14+X(i,2)))-5;
         g(5)=0.125-X(i,1);
         g(6)=Sig-Sigmax;
         g(7)=P-Pc;
@@ -408,10 +410,33 @@ switch Out.Function
         g=zeros(1,11); 
         penalty=0;
         
-%         g(1)=
+         g(1)= (27/ (X(i,1)*X(i,2)^2*X(i,3)))-1;
+         g(2)= (397.5/(X(i,1)*X(i,2)^2*X(i,3)^2))-1;
+         g(3)= ((1.93*X(i,4)^3)/(X(i,2)*X(i,6)^4*X(i,3)))-1;
+         g(4)= ((1.93*X(i,5)^3)/(X(i,2)*X(i,7)^4*X(i,3)))-1;
+         
+         kk1=(745*(X(i,4)/(X(i,2)*X(i,3))))^2;
+         g(5)= (((kk1+16.9*1000000)^0.5)/(110*X(i,6)^3))-1;
+         
+         kk2=(745*(X(i,5)/(X(i,2)*X(i,3))))^2;
+         g(6)= (((kk2+157.5*1000000)^0.5)/(85*X(i,7)^3))-1;
+    
+         g(7)= ((X(i,2)*X(i,3))/40)-1;
+         g(8)= ((5*X(i,2))/X(i,1))-1;
+         g(9)= (X(i,1)/(12*X(i,2)))-1;
+         g(10)= ((1.5*X(i,6)+1.9)/X(i,4))-1;
+         g(11)=((1.1*X(i,7)+1.9)/X(i,5))-1;
     
     
-    
+    for j=1:11
+            if g(j)<0
+                penalty=penalty+5*10^6*(1+abs(g(j)));
+                PenaltyBool=1;
+            end
+        end
+       
+      cost= ((0.7854*X(i,1)*X(i,2)^2)*(3.3333*X(i,3)^2+14.9334*X(i,3)-43.0934))-((1.508*X(i,1))*(X(i,6)^2+X(i,7)^2))+(7.4777*(X(i,6)^3+X(i,7)^3))+(0.7854*(X(i,4)*X(i,6)^2+X(i,5)*X(i,7)^2));
+       ft=cost+penalty; 
     
     % Tension/compression spring design 
     case 41   
@@ -443,5 +468,10 @@ switch Out.Function
         
         
         ft = (X(i,3) + 2) * X(i,2) * (X(i,1)^2) + penalty;
+        
+    
+        
+        
+        
 end
 
