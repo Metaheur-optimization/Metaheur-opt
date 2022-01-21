@@ -3,11 +3,11 @@ function Out = get_config(caseString)
 Out = [];
 
 %%Common parameters setting
-Out.Npopulation = 100;  %Population size - CSA:20
-Out.NDecisionVariable = 2;  %Number of decision variables
-Out.Function = 37;  %Number of Mathematical function according to fitness file
-Out.NRun = 50; %Number of runs - CSA:30
-Out.MaxIter = 250;  %Maximum number of iterations - CSA:2000 -->  20*30 * 2000 = 1200000, 
+Out.Npopulation = 20;  %Population size - CSA:20
+Out.NDecisionVariable = 10;  %Number of decision variables
+Out.Function = 1;  % Mathematical function number according to fitness file
+Out.NRun = 30; %Number of runs - CSA:30
+Out.MaxIter = 2000;  %Maximum number of iterations - CSA:2000 -->  20*30 * 2000 = 1200000, 
 
 
 
@@ -32,7 +32,7 @@ Out.ObjectiveType=0 ; %(0 Minimization, 1 Maximization)
 switch upper(caseString)
     case 'CSA'
         %%Parameters setting for the CSA
-        Out.AP = 0.02;    %0.20; % Awareness probability
+        Out.AP = 0.1;    %0.20; % Awareness probability
         Out.fl = 2.0;     %3.0; % Flight length (fl)
     case 'PSO'
         %%Parameters setting for the PSO

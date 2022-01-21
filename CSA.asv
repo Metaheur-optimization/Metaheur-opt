@@ -2,7 +2,8 @@
 function [Results]=CSA(Out)
 %% Setting and definition of variables
  
-Results.AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
+%Results.AllBestFitnesses=zeros(Out.NRun,Out.MaxIter);
+Results.AllBestFitnesses=zeros(Out.NRun, 1);
 Results.AllBestSolution=zeros(Out.NRun,Out.NDecisionVariable);
 Results.Feasible=zeros(Out.NRun,Out.MaxIter);
 Results.NFE=zeros(Out.NRun,Out.MaxIter);
@@ -25,9 +26,9 @@ for iRun=1:Out.NRun
     Position=init(Out); % Initialization of solutions
 %     Position(1,:)=[0.0516890284000, 0.3567169544000, 11.2890117993000];
     
-    [fitnessMemory(1:Npopulation), BoolPenalty(1:Npopulation)] = fitness(Position, 1:Npopulation, Out);   % Fitness evaluation
-    PenaltyCountAll = sum(BoolPenalty);
-    NFEAll=NFEAll+Npopulation;     %????
+%     [fitnessMemory(1:Npopulation), BoolPenalty(1:Npopulation)] = fitness(Position, 1:Npopulation, Out);   % Fitness evaluation
+%     PenaltyCountAll = sum(BoolPenalty);
+%     NFEAll=NFEAll+Npopulation;     %????
     
     
     for i=1:Npopulation
@@ -52,19 +53,34 @@ for iRun=1:Out.NRun
         for i=1:Npopulation
             r=rand;
             if r>AP
-                Xnew(i,1:NDecisionVariable)= Position(i,1:NDecisionVariable)+fl*(PositionMemory(num(i),1:NDecisionVariable)-Position(i,1:NDecisionVariable)); % Generation of a new position for crow i (state 1)
+                Xnew(i,:)= Position(i,:)+fl*rand(1, NDecisionVariable).*(PositionMemory(num(i),:)-Position(i,:)); % Generation of a new position for crow i (state 1)
+               % Farshid just added this. it is checking feasibility of new
+               % positions
+                while allXnew(i,:)<LowerBound(:) || Xnew(i,:)>UpperBound(:)
+                     Xnew(i,:)= Position(i,:)+fl*rand(1, NDecisionVariable).*(PositionMemory(num(i),:)-Position(i,:));
+                end
+                
             else
                 random_array = rand(1, NDecisionVariable);
                 Xnew(i,:)=LowerBound(1,:)+(UpperBound(1,:)-LowerBound(1,:)).*random_array(1,:); % Generation of a new position for crow i (state 2)
             end
             
+            % Farshid just added this. it is checking feasibility of new
+            % positions
+%             for j=1:NDecisionVariable
+%                 while Xnew(i,j)<LowerBound(j) || Xnew(i,j)>UpperBound(j)
+%                      Xnew(i, j) =  LowerBound(j)+(UpperBound(j)-LowerBound(j)).*rand;
+%                 end
+%             end
+            %%%%%%%%%%%%%%%%%%%%%%%%
             Bool=1;
-            for j=1:NDecisionVariable % Update position and memory
-                if Xnew(i,j)<LowerBound(j) || Xnew(i,j)>UpperBound(j)
-                    Bool=0;
-                    break
-                end
-            end
+%             for j=1:NDecisionVariable % Update position and memory
+%                 if Xnew(i,j)<LowerBound(j) || Xnew(i,j)>UpperBound(j)
+%                     Bool=0;
+%                     break
+%                 end
+%             end
+            
             if(Bool==1)
                 Position(i,:)=Xnew(i,:); % Update position
                 [fitne, BoolPenalty] =fitness(Position,i,Out); % Fitness evaluation
@@ -80,7 +96,7 @@ for iRun=1:Out.NRun
                 end
             end
         end
-        Bestfit(iIter)=min(fitnessMemory); % Best fitness found at iteration t
+        Bestfit(iIter)=min(min(fitnessMemory)); % Best fitness found at iteration t
         Results.NFE(iRun,iIter)=NFE;
         Results.Feasible(iRun,iIter)=NFE-PenaltyCount;
     end
@@ -88,9 +104,12 @@ for iRun=1:Out.NRun
     %% Saving results of the solution
     [~,ngbest]=min(fitnessMemory);
     Results.AllBestSolution(iRun,:)=PositionMemory(ngbest(1),:); % Solutin of the problem
-    Results.AllBestFitnesses(iRun,:)=Bestfit;
+    Results.AllBestFitnesses(iRun, 1)=min(Bestfit);
 % Results.NFEAll=NFEAll;
 % Results.PenaltyCount=PenaltyCountAll;
 end
 Results.NFEAll=NFEAll;
 Results.PenaltyCount=PenaltyCountAll;
+best_ = min(min(Results.AllBestFitnesses))
+mean_ = mean(Results.AllBestFitnesses)
+std_ = std(Results.AllBestFitnesses)
