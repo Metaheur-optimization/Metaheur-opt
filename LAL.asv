@@ -94,7 +94,7 @@ for iRun=1:Out.NRun
         %%% fitness for newBossLionPositionMemory
         [row, ~] = size(NewBossLionPositionMemory);
         for ii=1:row
-            fitnessMemory=fitness(NewBossLionPositionMemory(:,1:NDecisionVariable),ii,Out); % Fitness evaluation
+            fitnessMemory=fitness(NewBossLionPositionMemory(:,1:NDecisionVariable-1),ii,Out); % Fitness evaluation
             NewBossLionPositionMemory(ii,Out.NDecisionVariable+1)=fitnessMemory;
         end
         combineBossLions = [NewBossLionPositionMemory; BossLionPositionMemory];
@@ -123,7 +123,7 @@ for iRun=1:Out.NRun
       %P=PlotPositions(iIter,BossLionPosition,SupportLionPosition,NDecisionVariable,NoFuncEval);
         [row, ~] = size(NewSupportLionPositionMemory);
         for ii=1:row
-            fitnessMemory=fitness(NewSupportLionPositionMemory(:,1:NDecisionVariable),ii,Out); % Fitness evaluation
+            fitnessMemory=fitness(NewSupportLionPositionMemory(:,1:NDecisionVariable-1),ii,Out); % Fitness evaluation
             NewSupportLionPositionMemory(ii,Out.NDecisionVariable+1)=fitnessMemory;
         end
         AllPositionMemory=[NewBossLionPositionMemory; NewSupportLionPositionMemory];

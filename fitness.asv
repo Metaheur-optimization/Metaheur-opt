@@ -554,15 +554,6 @@ switch Out.Function
         for ii=1:7
             ft=ft-((X(i,:)-aSH(ii,:))*(X(i,:)-aSH(ii,:))'+cSH(ii))^(-1);
         end
-        
-    case 123
-        aSH=[4 4 4 4;1 1 1 1;8 8 8 8;6 6 6 6;3 7 3 7;2 9 2 9;5 5 3 3;8 1 8 1;6 2 6 2;7 3.6 7 3.6];
-        cSH=[.1 .2 .2 .4 .4 .6 .3 .7 .5 .5];
-
-        ft=0;
-        for ii=1:10
-            ft=ft-((X(i,:)-aSH(ii,:))*(X(i,:)-aSH(ii,:))'+cSH(ii))^(-1);
-        end
 end
 
 

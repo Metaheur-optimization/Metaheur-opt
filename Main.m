@@ -4,7 +4,7 @@ format long; close all; clc; clear;
 % rng('default')
 rng(0)
 addpath('plots')
-Algorithm='CSA'; 
+Algorithm='LAL'; 
 
 Out = get_config(Algorithm);
 

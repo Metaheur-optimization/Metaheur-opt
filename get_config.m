@@ -3,9 +3,9 @@ function Out = get_config(caseString)
 Out = [];
 
 %%Common parameters setting
-Out.Npopulation = 20;  %Population size - CSA:20
-Out.NDecisionVariable = 10;  %Number of decision variables
-Out.Function = 1;  % Mathematical function number according to fitness file
+Out.Npopulation = 100;  %Population size - CSA:20
+Out.NDecisionVariable = 4;  %Number of decision variables
+Out.Function = 123;  % Mathematical function number according to fitness file
 Out.NRun = 30; %Number of runs - CSA:30
 Out.MaxIter = 2000;  %Maximum number of iterations - CSA:2000 -->  20*30 * 2000 = 1200000, 
 
